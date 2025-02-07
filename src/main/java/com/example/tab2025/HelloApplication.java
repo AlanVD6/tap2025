@@ -10,6 +10,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vistas.Calculadora;
 
 import java.io.IOException;
 
@@ -55,18 +56,20 @@ public class HelloApplication extends Application {
 
     private Scene escena;
 
-    void Crearv1(){
+    void CrearUI(){
         mitCalculadora = new MenuItem("Calculadora");
+        mitCalculadora.setOnAction(actionEvent -> new Calculadora());
         menCompetencia1 = new Menu("competencia 1 ");
         menCompetencia1.getItems().addAll(mitCalculadora);
         mnbPrincipal = new MenuBar();
         mnbPrincipal.getMenus().addAll(menCompetencia1);
+        vBox = new VBox(mnbPrincipal);
+
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-
-        vBox = new VBox();
+        CrearUI();
         stage.setTitle("Hola mundo de Eventos :( ");
         stage.setScene(new Scene(vBox));
         stage.show();
