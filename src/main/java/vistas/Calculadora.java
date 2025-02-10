@@ -22,6 +22,7 @@ String strTeclas[] = {"7","8","9","*","4","5","6","/","1","2","3","+","=","0",".
     public void CrearUI(){
         CrearKeyboard();
         txtDisplay = new TextField("0");
+       // txtDisplay.setPromptText("tecekea tu operaciion");
         txtDisplay.setEditable(false);
         txtDisplay.setAlignment(Pos.BASELINE_RIGHT);
         vBox= new VBox(txtDisplay,gdpTeclado);
@@ -40,11 +41,19 @@ String strTeclas[] = {"7","8","9","*","4","5","6","/","1","2","3","+","=","0",".
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 arBtnTeclado[i][j] = new Button(strTeclas[pos]);
+                int finalPos = pos;
+                arBtnTeclado[i][j].setOnAction(actionEvent -> EventoTeclado(strTeclas[finalPos]));
                 arBtnTeclado[i][j].setPrefSize(50,50);
                 gdpTeclado.add(arBtnTeclado[i][j],j,i);
                 pos++;
+
             }
         }
+    }
+
+    private void EventoTeclado(String strTecla) {
+
+        txtDisplay.appendText(strTecla);
     }
 
     public Calculadora (){
