@@ -9,30 +9,29 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.lang.reflect.GenericDeclaration;
-
 public class Calculadora extends Stage {
-private Scene escena;
-private TextField txtDisplay;
-private VBox vBox;
-private GridPane gdpTeclado;
-private Button [][] arBtnTeclado;
-String strTeclas[] = {"7","8","9","*","4","5","6","/","1","2","3","+","=","0",".","-"};
+    private Scene escena;
+    private TextField txtDisplay;
+    private VBox vBox;
+    private GridPane gdpTeclado;
+    private Button[][] arBtnTeclado;
+    private String strTeclas[] = {"7", "8", "9", "*", "4", "5", "6", "/", "1", "2", "3", "+", "=", "0", ".", "-"};
+    private String operacion = "";
+    private double num1 = 0;
+    private boolean nuevoNumero = true;
 
-    public void CrearUI(){
+    public void CrearUI() {
         CrearKeyboard();
         txtDisplay = new TextField("0");
-       // txtDisplay.setPromptText("tecekea tu operaciion");
         txtDisplay.setEditable(false);
         txtDisplay.setAlignment(Pos.BASELINE_RIGHT);
-        vBox= new VBox(txtDisplay,gdpTeclado);
+        vBox = new VBox(txtDisplay, gdpTeclado);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
-        escena= new Scene(vBox,200,200);
-
-
+        escena = new Scene(vBox, 220, 250);
     }
-    public void CrearKeyboard(){
+
+    public void CrearKeyboard() {
         arBtnTeclado = new Button[4][4];
         gdpTeclado = new GridPane();
         gdpTeclado.setHgap(5);
@@ -43,25 +42,47 @@ String strTeclas[] = {"7","8","9","*","4","5","6","/","1","2","3","+","=","0",".
                 arBtnTeclado[i][j] = new Button(strTeclas[pos]);
                 int finalPos = pos;
                 arBtnTeclado[i][j].setOnAction(actionEvent -> EventoTeclado(strTeclas[finalPos]));
-                arBtnTeclado[i][j].setPrefSize(50,50);
-                gdpTeclado.add(arBtnTeclado[i][j],j,i);
+                arBtnTeclado[i][j].setPrefSize(50, 50);
+                gdpTeclado.add(arBtnTeclado[i][j], j, i);
                 pos++;
-
             }
         }
     }
 
     private void EventoTeclado(String strTecla) {
-
-        txtDisplay.appendText(strTecla);
+        if (strTecla.matches("[0-9.]")) { // Si es número o punto decimal
+            if (nuevoNumero) {
+                txtDisplay.setText(strTecla);
+                nuevoNumero = false;
+            } else {
+                txtDisplay.appendText(strTecla);
+            }
+        } else if (strTecla.matches("[+\\-*/]")) { // Si es operador
+            num1 = Double.parseDouble(txtDisplay.getText());
+            operacion = strTecla;
+            nuevoNumero = true;
+        } else if (strTecla.equals("=")) { // Si es igual
+            double num2 = Double.parseDouble(txtDisplay.getText());
+            double resultado = calcularResultado(num1, num2, operacion);
+            txtDisplay.setText(String.valueOf(resultado));
+            nuevoNumero = true;
+        }
     }
 
-    public Calculadora (){
+    private double calcularResultado(double num1, double num2, String operacion) {
+        switch (operacion) {
+            case "+": return num1 + num2;
+            case "-": return num1 - num2;
+            case "*": return num1 * num2;
+            case "/": return num2 != 0 ? num1 / num2 : 0; // Evitar división por cero
+            default: return num2;
+        }
+    }
+
+    public Calculadora() {
         CrearUI();
         this.setScene(escena);
         this.setTitle("Calculadora");
         this.show();
-
     }
-
 }
