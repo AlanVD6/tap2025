@@ -47,38 +47,48 @@ import java.io.IOException;
     }
 } */
 
-public class HelloApplication extends Application {
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import vistas.VentasRestaurantes;
 
+public class HelloApplication extends Application {
     private VBox vBox;
     private MenuBar mnbPrincipal;
-    private Menu menCompetencia1, menCompetencia2;
-    private MenuItem mitCalculadora;
-
+    private Menu menCompetencia1;
+    private MenuItem mitCalculadora, mitRestaurante;
     private Scene escena;
 
     void CrearUI(){
         mitCalculadora = new MenuItem("Calculadora");
         mitCalculadora.setOnAction(actionEvent -> new Calculadora());
-        menCompetencia1 = new Menu("competencia 1 ");
-        menCompetencia1.getItems().addAll(mitCalculadora);
-        mnbPrincipal = new MenuBar();
-        mnbPrincipal.getMenus().addAll(menCompetencia1);
+        mitRestaurante= new MenuItem("Restaurante");
+        mitRestaurante.setOnAction(actionEvent -> new VentasRestaurantes());
+        menCompetencia1 = new Menu("Competencia 1");
+        menCompetencia1.getItems().addAll(mitCalculadora,mitRestaurante );
+        mnbPrincipal = new MenuBar(menCompetencia1);
         vBox = new VBox(mnbPrincipal);
+        escena = new Scene(vBox);
 
+        // Asegurar la correcta carga del CSS
+        String css = getClass().getResource("/Styles/Main.Css").toExternalForm();
+        escena.getStylesheets().add(css);
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         CrearUI();
-        stage.setTitle("Hola mundo de Eventos :( ");
-        stage.setScene(new Scene(vBox));
-        stage.show();
+        stage.setTitle("Hola Mundo de Eventos");
+        stage.setScene(escena);
         stage.setMaximized(true);
-
+        stage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 }

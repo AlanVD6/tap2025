@@ -4,5 +4,6 @@ module com.example.tab2025 {
 
 
     opens com.example.tab2025 to javafx.fxml;
+    requires org.kordamp.bootstrapfx.core;
     exports com.example.tab2025;
 }

@@ -15,7 +15,7 @@ public class Calculadora extends Stage {
     private VBox vBox;
     private GridPane gdpTeclado;
     private Button[][] arBtnTeclado;
-    private String strTeclas[] = {"7", "8", "9", "*", "4", "5", "6", "/", "1", "2", "3", "+", "=", "0", ".", "-"};
+    private String[] strTeclas = {"7", "8", "9", "*", "4", "5", "6", "/", "1", "2", "3", "+", ".", "0", "=", "-"};
     private String operacion = "";
     private double num1 = 0;
     private boolean nuevoNumero = true;
@@ -29,6 +29,10 @@ public class Calculadora extends Stage {
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
         escena = new Scene(vBox, 220, 250);
+
+        // Cargar CSS correctamente
+        String css = getClass().getResource("/Styles/Calcu.css").toExternalForm();
+        escena.getStylesheets().add(css);
     }
 
     public void CrearKeyboard() {
@@ -37,9 +41,13 @@ public class Calculadora extends Stage {
         gdpTeclado.setHgap(5);
         gdpTeclado.setVgap(5);
         int pos = 0;
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 arBtnTeclado[i][j] = new Button(strTeclas[pos]);
+                if(strTeclas[pos].equals("*"))
+                    arBtnTeclado[i][j].setId("fontButton"); // Se corrigió el ID
+
                 int finalPos = pos;
                 arBtnTeclado[i][j].setOnAction(actionEvent -> EventoTeclado(strTeclas[finalPos]));
                 arBtnTeclado[i][j].setPrefSize(50, 50);
@@ -50,18 +58,18 @@ public class Calculadora extends Stage {
     }
 
     private void EventoTeclado(String strTecla) {
-        if (strTecla.matches("[0-9.]")) { // Si es número o punto decimal
+        if (strTecla.matches("[0-9.]")) {
             if (nuevoNumero) {
                 txtDisplay.setText(strTecla);
                 nuevoNumero = false;
             } else {
                 txtDisplay.appendText(strTecla);
             }
-        } else if (strTecla.matches("[+\\-*/]")) { // Si es operador
+        } else if (strTecla.matches("[+\\-*/]")) {
             num1 = Double.parseDouble(txtDisplay.getText());
             operacion = strTecla;
             nuevoNumero = true;
-        } else if (strTecla.equals("=")) { // Si es igual
+        } else if (strTecla.equals("=")) {
             double num2 = Double.parseDouble(txtDisplay.getText());
             double resultado = calcularResultado(num1, num2, operacion);
             txtDisplay.setText(String.valueOf(resultado));
@@ -74,7 +82,7 @@ public class Calculadora extends Stage {
             case "+": return num1 + num2;
             case "-": return num1 - num2;
             case "*": return num1 * num2;
-            case "/": return num2 != 0 ? num1 / num2 : 0; // Evitar división por cero
+            case "/": return num2 != 0 ? num1 / num2 : 0;
             default: return num2;
         }
     }
