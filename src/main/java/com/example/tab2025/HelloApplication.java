@@ -63,18 +63,16 @@ public class HelloApplication extends Application {
     private MenuItem mitCalculadora, mitRestaurante;
     private Scene escena;
 
-    void CrearUI(){
+    void CrearUI() {
         mitCalculadora = new MenuItem("Calculadora");
         mitCalculadora.setOnAction(actionEvent -> new Calculadora());
-        mitRestaurante= new MenuItem("Restaurante");
+        mitRestaurante = new MenuItem("Restaurante");
         mitRestaurante.setOnAction(actionEvent -> new VentasRestaurantes());
         menCompetencia1 = new Menu("Competencia 1");
-        menCompetencia1.getItems().addAll(mitCalculadora,mitRestaurante );
+        menCompetencia1.getItems().addAll(mitCalculadora, mitRestaurante);
         mnbPrincipal = new MenuBar(menCompetencia1);
         vBox = new VBox(mnbPrincipal);
         escena = new Scene(vBox);
-
-        // Asegurar la correcta carga del CSS
         String css = getClass().getResource("/Styles/Main.Css").toExternalForm();
         escena.getStylesheets().add(css);
     }

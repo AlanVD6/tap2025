@@ -1,14 +1,14 @@
 .button{
-    -fx-background-color: #4a7cc9;
-    -fx-background-radius: 20;
-    -fx-text-fill: white;
-    -fx-border-color: black;
-    -fx-border-radius: 20;
-    -fx-padding: 10 6 6 6;
+    -fx-background-color: #1d8ab2; /* Color de fondo del botón (azul claro) */
+    -fx-background-radius: 20; /* Bordes redondeados del botón (radio de 20 píxeles) */
+    -fx-text-fill: white; /* Color del texto dentro del botón (blanco) */
+    -fx-border-color: black ;  /* Color del borde del botón (negro) */
+    -fx-border-radius: 20; /* Bordes redondeados del borde (radio de 20 píxeles) */
+    -fx-padding: 10 6 6 6; /* Espaciado interno del botón (arriba, derecha, abajo, izquierda) */
 }
-
 #font-button {
-    -fx-pref-width: 320px;
-    -fx-font: bold italic 20pt "Arial";
-    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+    -fx-pref-width: 320px; /* Ancho preferido del botón (320 píxeles) */
+    -fx-font: bold italic 20pt "Arial"; /* Fuente del texto: negrita, cursiva,
+                                        tamaño 20pt, tipo Arial */
+    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); /* Efecto de sombra en el texto */
 }
