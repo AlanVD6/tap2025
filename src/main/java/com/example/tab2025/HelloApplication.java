@@ -1,5 +1,6 @@
 package com.example.tab2025;
 
+import com.modelos.Conexion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -64,6 +65,7 @@ public class HelloApplication extends Application {
     private Scene escena;
 
     void CrearUI() {
+
         mitCalculadora = new MenuItem("Calculadora");
         mitCalculadora.setOnAction(actionEvent -> new Calculadora());
         mitRestaurante = new MenuItem("Restaurante");
@@ -79,6 +81,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        Conexion.createConnection();
         CrearUI();
         stage.setTitle("Hola Mundo de Eventos");
         stage.setScene(escena);
