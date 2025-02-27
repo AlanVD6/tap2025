@@ -8,5 +8,6 @@ module com.example.tab2025 {
     exports com.example.tab2025;
     requires mysql.connector.j;
     requires java.sql;
+    requires java.desktop;
 
 }
