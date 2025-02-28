@@ -1,19 +1,14 @@
 package com.example.tab2025;
 
-import com.modelos.Conexion;
+import com.example.modelos.Conexion;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import vistas.Calculadora;
-
-import java.io.IOException;
 
 /*public class HelloApplication extends Application {
 
@@ -48,16 +43,8 @@ import java.io.IOException;
     }
 } */
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import vistas.ListaClientes;
 import vistas.Rompecabezas;
-import vistas.VentasRestaurantes;
 
 public class HelloApplication extends Application {
     private VBox vBox;

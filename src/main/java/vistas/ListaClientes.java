@@ -1,10 +1,12 @@
 package vistas;
 
-import com.modelos.ClientesDAO;
+import com.example.modelos.ClientesDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,16 +28,35 @@ public class ListaClientes extends Stage {
         btnAgregar.setGraphic(imv);
         tlbMenu = new ToolBar(btnAgregar);
         tbvClientes = new TableView<>();
+        CreateTable();
         vBox = new VBox(tlbMenu,tbvClientes);
         escena = new Scene(vBox,800,600);
     }
+
+    private void CreateTable() {
+        ClientesDAO objc = new ClientesDAO();
+        TableColumn<ClientesDAO, String> tbcNomCte = new TableColumn<>("Nombre");
+        tbcNomCte.setCellValueFactory(new PropertyValueFactory<>("nomCte"));
+
+        TableColumn<ClientesDAO, String> tbcDireccion = new TableColumn<>("Dirección");
+        tbcDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+
+        TableColumn<ClientesDAO, String> tbcTel = new TableColumn<>("Telefono");
+        tbcTel.setCellValueFactory(new PropertyValueFactory<>("telCte"));
+
+        TableColumn<ClientesDAO, String> tbcEmail = new TableColumn<>("Email");
+        tbcEmail.setCellValueFactory(new PropertyValueFactory<>("emailCte"));
+        tbvClientes.getColumns().addAll(tbcNomCte, tbcDireccion, tbcTel, tbcEmail);
+        tbvClientes.setItems(objc.SELECT());
+
+
+    }
+
     public ListaClientes(){
         CrearUI();
         this.setTitle("Listado de Clientes :)");
         this.setScene(escena);
         this.show();
     }
-
-
 }
 

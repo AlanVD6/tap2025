@@ -1,4 +1,4 @@
-package com.modelos;
+package com.example.modelos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
