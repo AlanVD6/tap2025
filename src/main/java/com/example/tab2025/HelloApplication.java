@@ -57,10 +57,13 @@ public class HelloApplication extends Application {
 
         mitCalculadora = new MenuItem("Calculadora");
         mitCalculadora.setOnAction(actionEvent -> new Calculadora());
+
         mitRompecabeza= new MenuItem("Rompecabezas");
         mitRompecabeza.setOnAction(actionEvent -> new Rompecabezas());
+
         mitRestaurante = new MenuItem("Restaurante");
         mitRestaurante.setOnAction(actionEvent -> new ListaClientes());
+
         menCompetencia1 = new Menu("Competencia 1");
         menCompetencia1.getItems().addAll(mitCalculadora, mitRestaurante, mitRompecabeza);
         mnbPrincipal = new MenuBar(menCompetencia1);

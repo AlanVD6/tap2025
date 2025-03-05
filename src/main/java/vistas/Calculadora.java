@@ -1,5 +1,4 @@
 package vistas;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -82,6 +81,9 @@ public class Calculadora extends Stage {
             if (nuevoNumero) {
                 txtDisplay.setText("-");
                 nuevoNumero = false;
+            } else if (txtDisplay.getText().endsWith(" ")) {
+                txtDisplay.appendText("-");
+                nuevoNumero = false;
             } else if (!txtDisplay.getText().endsWith(" ")) {
                 txtDisplay.appendText(" - ");
                 operacion = "-";
@@ -114,7 +116,6 @@ public class Calculadora extends Stage {
             nuevoNumero = true;
         }
     }
-
 
     private double calcularResultado(double num1, double num2, String operacion) {
         switch (operacion) {

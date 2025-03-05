@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
 public class ListaClientes extends Stage {
 
     private ToolBar tlbMenu;
@@ -19,44 +18,38 @@ public class ListaClientes extends Stage {
     private VBox vBox;
     private Scene escena;
     private Button btnAgregar;
-
-    private void CrearUI() {
-        ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
-        btnAgregar = new Button();
-        imv.setFitHeight(20);
-        imv.setFitWidth(20);
-        btnAgregar.setGraphic(imv);
-        tlbMenu = new ToolBar(btnAgregar);
-        tbvClientes = new TableView<>();
-        CreateTable();
-        vBox = new VBox(tlbMenu,tbvClientes);
-        escena = new Scene(vBox,800,600);
-    }
-
-    private void CreateTable() {
-        ClientesDAO objc = new ClientesDAO();
-        TableColumn<ClientesDAO, String> tbcNomCte = new TableColumn<>("Nombre");
-        tbcNomCte.setCellValueFactory(new PropertyValueFactory<>("nomCte"));
-
-        TableColumn<ClientesDAO, String> tbcDireccion = new TableColumn<>("Dirección");
-        tbcDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-
-        TableColumn<ClientesDAO, String> tbcTel = new TableColumn<>("Telefono");
-        tbcTel.setCellValueFactory(new PropertyValueFactory<>("telCte"));
-
-        TableColumn<ClientesDAO, String> tbcEmail = new TableColumn<>("Email");
-        tbcEmail.setCellValueFactory(new PropertyValueFactory<>("emailCte"));
-        tbvClientes.getColumns().addAll(tbcNomCte, tbcDireccion, tbcTel, tbcEmail);
-        tbvClientes.setItems(objc.SELECT());
-
-
-    }
-
     public ListaClientes(){
         CrearUI();
         this.setTitle("Listado de Clientes :)");
         this.setScene(escena);
         this.show();
     }
-}
 
+    private void CrearUI() {
+        tbvClientes = new TableView<>();
+        btnAgregar = new Button();
+        btnAgregar.setOnAction(event -> new Cliente(tbvClientes));
+        ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
+        imv.setFitWidth(20);
+        imv.setFitHeight(20);
+        btnAgregar.setGraphic(imv);
+        tlbMenu = new ToolBar(btnAgregar);
+        CreateTable();
+        vBox = new VBox(tlbMenu,tbvClientes);
+        escena = new Scene(vBox, 800, 600);
+    }
+
+    private void CreateTable() {
+        ClientesDAO objC = new ClientesDAO();
+        TableColumn<ClientesDAO,String> tbcNomCte = new TableColumn<>("Nombre");
+        tbcNomCte.setCellValueFactory(new PropertyValueFactory<>("nomCte"));
+        TableColumn<ClientesDAO,String> tbcDireccion = new TableColumn<>("Dirección");
+        tbcDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        TableColumn<ClientesDAO,String> tbcTel = new TableColumn<>("Telefono");
+        tbcTel.setCellValueFactory(new PropertyValueFactory<>("telCte"));
+        TableColumn<ClientesDAO,String> tbcEmail = new TableColumn<>("Email");
+        tbcEmail.setCellValueFactory(new PropertyValueFactory<>("emailCte"));
+        tbvClientes.getColumns().addAll(tbcNomCte,tbcDireccion,tbcTel,tbcEmail);
+        tbvClientes.setItems(objC.SELECT());
+    }
+}
