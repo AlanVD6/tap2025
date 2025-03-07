@@ -52,19 +52,18 @@ public class Rompecabezas {
         Principal.setScene(escena1);
         Principal.setTitle("Rompecabezas");
         Principal.setResizable(false);
-
         Barra = new ToolBar();
         Button btnRompe1 = new Button("7x4");
-        Button btnRompe2 = new Button("2x2");
+        Button btnRompe2 = new Button("5x3");
         Button btnRompe3 = new Button("6x2");
 
         btnRompe1.setOnAction(event -> LoadRompecabezas("/Image/rompe.png", 7, 4, "7x4"));
-        btnRompe2.setOnAction(event -> LoadRompecabezas("/Image/rompe2.jpg", 2, 2, "2x2"));
+        btnRompe2.setOnAction(event -> LoadRompecabezas("/Image/rompe02.jpeg", 5, 3, "5x3"));
         btnRompe3.setOnAction(event -> LoadRompecabezas("/Image/rompe3.jpg", 6, 2, "6x2"));
 
         Barra.getItems().addAll(btnRompe1, btnRompe2, btnRompe3);
 
-        LbTiempo = new Label("Tiempo: 0 segundos");
+        LbTiempo = new Label("Tiempo restante: 480 segundos");
         LbTiempo.setStyle("-fx-font-size: 1.5em;");
 
         HBox cajaBotones = new HBox(8);
@@ -78,16 +77,18 @@ public class Rompecabezas {
         if (table != null) {
             table.getChildren().clear();
         }
+        detenerTemporizador();
+        iniciarTemporizador();
 
         Image imagen = new Image(getClass().getResourceAsStream(rutaImagen));
         table = new Mesa(numeroColumnas, numeroFilas);
-
         piezas = new ArrayList<>();
         for (int columna = 0; columna < numeroColumnas; columna++) {
             for (int fila = 0; fila < numeroFilas; fila++) {
                 int x = columna * Pieza.TAM;
                 int y = fila * Pieza.TAM;
-                final Pieza pieza = new Pieza(imagen, x, y, fila > 0, columna > 0, fila < numeroFilas - 1,
+                final Pieza pieza = new Pieza(imagen, x, y, fila > 0,
+                        columna > 0, fila < numeroFilas - 1,
                         columna < numeroColumnas - 1, table.getWidth(), table.getHeight());
                 piezas.add(pieza);
             }
@@ -110,7 +111,6 @@ public class Rompecabezas {
                             new KeyValue(pieza.translateYProperty(), revolverY)));
                 }
                 lineaTiempo.playFromStart();
-                iniciarTemporizador();
             }
         });
         Button botonResolver = new Button("RESOLVER");
@@ -137,9 +137,10 @@ public class Rompecabezas {
                 detenerTemporizador();
                 if (RompeCompletado()) {
                     MensajeFelicitaciones();
-                    guardarTiempoArchivo();
+                    guardarTiempoArchivo(false); // Guardar en el archivo que se completó el rompecabezas
                 } else {
                     MensajeIncompleto();
+                    guardarTiempoArchivo(true); // Guardar en el archivo que no se completó el rompecabezas
                 }
             }
         });
@@ -151,12 +152,19 @@ public class Rompecabezas {
     }
 
     private void iniciarTemporizador() {
-        seg = 0;
+        seg = 480;
         tempo = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                seg++;
-                LbTiempo.setText("Tiempo: " + seg + " segundos"); }
+                seg--;
+                LbTiempo.setText("Tiempo restante: " + seg + " segundos");
+                if (seg <= 0) {
+                    detenerTemporizador();
+                    MensajeTiempoAgotado();
+                    guardarTiempoArchivo(true);
+                    MensajeIncompleto();
+                }
+            }
         }));
         tempo.setCycleCount(Timeline.INDEFINITE);
         tempo.play();
@@ -164,36 +172,48 @@ public class Rompecabezas {
 
     private void detenerTemporizador() {
         if (tempo != null) {
-            tempo.stop();}
+            tempo.stop();
+        }
     }
 
     private boolean RompeCompletado() {
         for (Pieza pieza : piezas) {
             if (pieza.getTranslateX() != 0 || pieza.getTranslateY() != 0) {
-                return false;}}
+                return false;
+            }
+        }
         return true;
     }
-
     private void MensajeFelicitaciones() {
         javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
         alerta.setTitle("¡Muchas Felicidades!");
         alerta.setHeaderText(null);
-        alerta.setContentText("Finalizaste correctamente el rompecabezas con un tiempo de " + seg + " segundos.\n" +
-                "Escogiste el rompecabezas de tamaño:  " + tamRompeSelec);
+        alerta.setContentText("Finalizaste correctamente el rompecabezas con un tiempo de " + (480 - seg) + " segundos.\n" +
+                "Escogiste el rompecabezas de tamaño: " + tamRompeSelec);
         alerta.showAndWait();
     }
-
     private void MensajeIncompleto() {
         javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
-        alerta.setTitle("El Rompecabezas esta Incompleto");
+        alerta.setTitle("El Rompecabezas está Incompleto");
         alerta.setHeaderText(null);
         alerta.setContentText("El rompecabezas no ha sido completado correctamente. ¡Sigue intentando vamos!");
         alerta.showAndWait();
     }
+    private void MensajeTiempoAgotado() {
+        javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+        alerta.setTitle("¡Tiempo agotado!");
+        alerta.setHeaderText(null);
+        alerta.setContentText("El tiempo para completar el rompecabezas ha finalizado. ¡Inténtalo de nuevo!");
+        alerta.showAndWait();
+    }
 
-    private void guardarTiempoArchivo() {
+    private void guardarTiempoArchivo(boolean tiempoAgotado) {
         try (FileWriter escritor = new FileWriter("tiempos.txt", true)) {
-            escritor.write("Tiempo completado: " + seg + " segundos (Tamaño: " + tamRompeSelec + ")\n");
+            if (tiempoAgotado) {
+                escritor.write("Tiempo agotado - No se completó el rompecabezas (Tamaño: " + tamRompeSelec + ")\n");
+            } else {
+                escritor.write("Tiempo completado: " + (480 - seg) + " segundos (Tamaño: " + tamRompeSelec + ")\n");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -228,9 +248,8 @@ public class Rompecabezas {
                 );
             }
         }
-        @Override
-        protected void layoutChildren() {}
     }
+
     public static class Pieza extends Parent {
         public static final int TAM = 100;
         private final double xCorrecta;
@@ -309,6 +328,7 @@ public class Rompecabezas {
                 }
             });
         }
+
         private Shape crearPieza() {
             Shape forma = crearRectanguloPieza();
             if (tienePestanaDerecha) {
@@ -369,8 +389,10 @@ public class Rompecabezas {
             setDisable(true);
         }
         public double getXCorrecta() {
-            return xCorrecta;}
+            return xCorrecta;
+        }
         public double getYCorrecta() {
-            return yCorrecta;}
+            return yCorrecta;
+        }
     }
 }
