@@ -2,7 +2,6 @@ package vistas;
 
 import com.example.Componentes.ButtonCell;
 import com.example.modelos.ClientesDAO;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,7 +27,7 @@ public class ListaClientes extends Stage {
     private void CrearUI() {
         tbvClientes = new TableView<>();
         btnAgregar = new Button();
-        btnAgregar.setOnAction(event -> new Cliente(tbvClientes));
+        btnAgregar.setOnAction(event -> new Cliente(tbvClientes, null));
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
         imv.setFitWidth(20);
         imv.setFitHeight(20);
@@ -53,19 +52,19 @@ public class ListaClientes extends Stage {
         TableColumn<ClientesDAO,String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<ClientesDAO, String>, TableCell<ClientesDAO, String>>() {
             @Override
-            public TableCell<ClientesDAO, String> call(TableColumn<ClientesDAO, String> clientesDAOStringTableColumn) {
+            public TableCell<ClientesDAO, String> call(TableColumn<ClientesDAO, String> param) {
                 return new ButtonCell("Editar");
             }
         });
         TableColumn<ClientesDAO,String> tbcEliminar = new TableColumn<>("Eliminar");
         tbcEliminar.setCellFactory(new Callback<TableColumn<ClientesDAO, String>, TableCell<ClientesDAO, String>>() {
             @Override
-            public TableCell<ClientesDAO, String> call(TableColumn<ClientesDAO, String> clientesDAOStringTableColumn) {
+            public TableCell<ClientesDAO, String> call(TableColumn<ClientesDAO, String> param) {
                 return new ButtonCell("Eliminar");
             }
         });
 
-        tbvClientes.getColumns().addAll(tbcNomCte,tbcDireccion,tbcTel,tbcEmail, tbcEditar, tbcEliminar);
+        tbvClientes.getColumns().addAll(tbcNomCte,tbcDireccion,tbcTel,tbcEmail,tbcEditar,tbcEliminar);
         tbvClientes.setItems(objC.SELECT());
     }
 }

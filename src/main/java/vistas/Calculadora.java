@@ -1,4 +1,5 @@
 package vistas;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,10 +25,20 @@ public class Calculadora extends Stage {
         txtDisplay = new TextField("0");
         txtDisplay.setEditable(false);
         txtDisplay.setAlignment(Pos.BASELINE_RIGHT);
-        vBox = new VBox(txtDisplay, gdpTeclado);
+
+        // Botón de borrado
+        Button btnBorrar = new Button("C");
+        btnBorrar.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+        btnBorrar.setOnAction(actionEvent -> {
+            txtDisplay.setText("0");
+            operacion = "";
+            nuevoNumero = true;
+        });
+
+        vBox = new VBox(txtDisplay, btnBorrar, gdpTeclado);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
-        escena = new Scene(vBox, 220, 250);
+        escena = new Scene(vBox, 220, 280); // Aumentamos la altura para el botón de borrado
         String css = getClass().getResource("/Styles/Calcu.css").toExternalForm();
         escena.getStylesheets().add(css);
     }
@@ -54,9 +65,10 @@ public class Calculadora extends Stage {
 
     private void EventoTeclado(String strTecla) {
         if (txtDisplay.getText().equals("Math Error")) {
-            txtDisplay.setText("");
+            txtDisplay.setText("0");
             nuevoNumero = true;
         }
+
         if (strTecla.matches("[0-9]")) {
             if (nuevoNumero) {
                 txtDisplay.setText(strTecla);
@@ -78,21 +90,37 @@ public class Calculadora extends Stage {
                 nuevoNumero = false;
             }
         } else if (strTecla.equals("-")) {
+            String textoActual = txtDisplay.getText();
+
+            // Si es un nuevo número, permite un "-" al inicio (para números negativos)
             if (nuevoNumero) {
                 txtDisplay.setText("-");
                 nuevoNumero = false;
-            } else if (txtDisplay.getText().endsWith(" ")) {
+            }
+            // Si el texto actual termina con un espacio, permite un "-" (para operaciones)
+            else if (textoActual.endsWith(" ")) {
                 txtDisplay.appendText("-");
                 nuevoNumero = false;
-            } else if (!txtDisplay.getText().endsWith(" ")) {
-                txtDisplay.appendText(" - ");
-                operacion = "-";
-                nuevoNumero = false;
+            }
+            // Si el texto actual no termina con un espacio, verifica si ya hay un "-"
+            else if (!textoActual.endsWith(" ")) {
+                // Verifica si el último carácter es un "-"
+                if (textoActual.endsWith("-")) {
+                    // Si ya hay un "-", muestra "Math Error"
+                    txtDisplay.setText("Math Error");
+                    nuevoNumero = true;
+                } else {
+                    // Si no hay un "-", agrega " - " para la operación
+                    txtDisplay.appendText(" - ");
+                    operacion = "-";
+                    nuevoNumero = false;
+                }
             }
         } else if (strTecla.equals("=")) {
             String texto = txtDisplay.getText().trim();
             if (operacion.isEmpty() || texto.endsWith(" " + operacion)
                     || texto.matches("[+\\-*/]+")) {
+                txtDisplay.setText("Math Error");
                 return;
             }
             String[] partes = texto.split(" ");
@@ -106,9 +134,6 @@ public class Calculadora extends Stage {
                     return;
                 }
                 resultado = calcularResultado(resultado, num2, operador);
-            }
-            if (resultado == 0) {
-                resultado = 0;
             }
             txtDisplay.setText(String.valueOf(resultado));
             num1 = resultado;

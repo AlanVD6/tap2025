@@ -12,3 +12,11 @@
                                         tamaño 20pt, tipo Arial */
     -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 ); /* Efecto de sombra en el texto */
 }
+#borrar-button {
+    -fx-background-color: #ff4444; /* Color de fondo rojo */
+    -fx-text-fill: white; /* Texto en blanco */
+    -fx-background-radius: 20; /* Bordes redondeados */
+    -fx-border-color: black; /* Borde negro */
+    -fx-border-radius: 20; /* Bordes redondeados del borde */
+    -fx-padding: 10 6 6 6; /* Espaciado interno */
+}

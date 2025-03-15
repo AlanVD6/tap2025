@@ -2,6 +2,7 @@ package com.example.modelos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -9,7 +10,7 @@ public class ClientesDAO {
 
     private int idCte;
     private String nomCte;
-    private  String telCte;
+    private String telCte;
     private String direccion;
     private String emailCte;
 
@@ -57,26 +58,25 @@ public class ClientesDAO {
         String query = "INSERT INTO clientes(nomCte,telCte,direccion,emailCte) " +
                 "values('"+nomCte+"','"+telCte+"','"+direccion+"','"+emailCte+"')";
         try{
-            Statement stmt= Conexion.connection.createStatement();
-            stmt.executeUpdate(query);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void UPDATE(){
-        String query = "UPDATE  clientes SET nomCte = '"+nomCte+"','" +
-                 "telCte = '"+telCte+"',direccion ='"+direccion+"',+" +
-                "emailCte ='"+emailCte+"'WHERE idCte =" +idCte;
-        try{
             Statement stmt = Conexion.connection.createStatement();
             stmt.executeUpdate(query);
         }catch(Exception e){
             e.printStackTrace();
         }
     }
+    public void UPDATE(){
+        String query = "UPDATE clientes SET nomCte = '"+nomCte+"'," +
+                "telCte = '"+telCte+"',direccion = '"+direccion+"'," +
+                "emailCte = '"+emailCte+"' WHERE idCte = "+idCte;
+        try {
+            Statement stmt = Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
-    public void DELETE (){
+    }
+    public void DELETE(){
         String query = "DELETE FROM clientes WHERE idCte = "+idCte;
         try{
             Statement stmt = Conexion.connection.createStatement();
@@ -85,9 +85,8 @@ public class ClientesDAO {
             e.printStackTrace();
         }
     }
-
-    public ObservableList<ClientesDAO> SELECT (){
-        String query ="SELECT * FROM clientes" ;
+    public ObservableList<ClientesDAO> SELECT(){
+        String query = "SELECT * FROM clientes";
         ObservableList<ClientesDAO> listaC = FXCollections.observableArrayList();
         ClientesDAO objC;
         try {
@@ -107,4 +106,5 @@ public class ClientesDAO {
         }
         return listaC;
     }
+
 }
