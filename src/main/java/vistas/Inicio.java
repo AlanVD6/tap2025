@@ -27,6 +27,8 @@ public class Inicio {
         Button btnTicket = crearBotonConImagen("Ticket", "/Image/ticket.png");
         Button btnAdmin = crearBotonConImagen("Admin", "/Image/administrador.png");
 
+        btnPlatillos.setOnAction(e -> new PlatillosView(root));
+
         // Agregar botones a la barra superior
         topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa, btnTicket, btnAdmin);
 
