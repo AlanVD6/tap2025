@@ -9,10 +9,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import vistas.Calculadora;
-import vistas.ListaClientes;
-import vistas.Rompecabezas;
-import vistas.Celayork;
+import vistas.*;
 
 public class HelloApplication extends Application {
     private VBox vBox;
@@ -30,7 +27,7 @@ public class HelloApplication extends Application {
         mitRompecabeza.setOnAction(actionEvent -> new Rompecabezas());
 
         mitRestaurante = new MenuItem("Restaurante");
-        mitRestaurante.setOnAction(actionEvent -> new ListaClientes());
+        mitRestaurante.setOnAction(actionEvent -> new PantallaPrincipalRestaurante());
 
         mitHilo = new MenuItem("Celayork");
         mitHilo.setOnAction(actionEvent -> new Celayork());

@@ -38,7 +38,7 @@ public class Calculadora extends Stage {
         vBox = new VBox(txtDisplay, btnBorrar, gdpTeclado);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
-        escena = new Scene(vBox, 220, 280); // Aumentamos la altura para el botón de borrado
+        escena = new Scene(vBox, 220, 280);
         String css = getClass().getResource("/Styles/Calcu.css").toExternalForm();
         escena.getStylesheets().add(css);
     }
