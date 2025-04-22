@@ -68,7 +68,7 @@ public class PantallaPrincipalRestaurante extends Stage {
         header.setPadding(new Insets(15));
         header.setStyle("-fx-background-color: #343a40; -fx-padding: 15px;");
 
-        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/Images/img}.png")));
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/Image/img.jpg")));
         logo.setFitHeight(50);
         logo.setFitWidth(50);
 
