@@ -1,6 +1,6 @@
 package vistas;
 
-import com.example.modelos.Platillo;
+import com.example.modelos.Bebida;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,9 +12,9 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class PlatillosView {
+public class BebidasView {
 
-    public PlatillosView(BorderPane root) {
+    public BebidasView(BorderPane root) {
         // Configurar el fondo con imagen
         root.getStyleClass().add("background-with-image");
 
@@ -33,38 +33,38 @@ public class PlatillosView {
             ((Stage) root.getScene().getWindow()).close();
         });
 
-        ArrayList<Platillo> platillos = cargarPlatillos();
-        FlowPane listaPlatillos = new FlowPane();
-        listaPlatillos.setPadding(new Insets(10));
-        listaPlatillos.setHgap(15);
-        listaPlatillos.setVgap(15);
+        ArrayList<Bebida> bebidas = cargarBebidas();
+        FlowPane contenedor = new FlowPane();
+        contenedor.setPadding(new Insets(10));
+        contenedor.setHgap(15);
+        contenedor.setVgap(15);
 
-        for (Platillo p : platillos) {
-            listaPlatillos.getChildren().add(crearBotonPlatillo(p, root));
+        for (Bebida b : bebidas) {
+            contenedor.getChildren().add(crearBotonBebida(b, root));
         }
 
-        mainContainer.getChildren().addAll(btnRegresar, listaPlatillos);
+        mainContainer.getChildren().addAll(btnRegresar, contenedor);
         root.setCenter(mainContainer);
     }
 
-    private ArrayList<Platillo> cargarPlatillos() {
-        ArrayList<Platillo> lista = new ArrayList<>();
-        lista.add(new Platillo("Milanesa de pollo", 50.00, "1 pz milanesa de pollo, 100gr papas fritas, 50gr ensalada", "/Image/milanesa.jpg"));
-        lista.add(new Platillo("Chorizo en salsa", 40.00, "150gr de chorizo", "/Image/chorizo.jpg"));
-        lista.add(new Platillo("Verduras salteadas", 35.00, "50gr zanahoria, papa, chayote, cebolla, jitomate", "/Image/verduras.jpg"));
+    private ArrayList<Bebida> cargarBebidas() {
+        ArrayList<Bebida> lista = new ArrayList<>();
+        lista.add(new Bebida("Agua Natural", 10.00, "Botella 600ml", "/Image/agua.png"));
+        lista.add(new Bebida("Jugo de Naranja", 15.00, "Jugo natural 350ml", "/Image/jugo.png"));
+        lista.add(new Bebida("Refresco Coca-Cola", 18.00, "Botella 600ml", "/Image/coca.png"));
         return lista;
     }
 
-    private VBox crearBotonPlatillo(Platillo p, BorderPane root) {
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream(p.getImagen())));
+    private VBox crearBotonBebida(Bebida b, BorderPane root) {
+        ImageView img = new ImageView(new Image(getClass().getResourceAsStream(b.getImagen())));
         img.setFitHeight(80);
         img.setFitWidth(80);
         img.getStyleClass().add("item-image");
 
-        Text nombre = new Text(p.getNombre());
+        Text nombre = new Text(b.getNombre());
         nombre.getStyleClass().add("item-name");
 
-        Text precio = new Text(String.format("$%.2f", p.getPrecio()));
+        Text precio = new Text(String.format("$%.2f", b.getPrecio()));
         precio.getStyleClass().add("item-price");
 
         VBox box = new VBox(img, nombre, precio);
@@ -72,33 +72,33 @@ public class PlatillosView {
         box.setSpacing(5);
         box.getStyleClass().add("item-container");
 
-        box.setOnMouseClicked(e -> mostrarDetallePlatillo(p, root));
+        box.setOnMouseClicked(e -> mostrarDetalleBebida(b, root));
 
         return box;
     }
 
-    private void mostrarDetallePlatillo(Platillo p, BorderPane root) {
+    private void mostrarDetalleBebida(Bebida b, BorderPane root) {
         VBox detalle = new VBox();
         detalle.setPadding(new Insets(20));
         detalle.setSpacing(15);
         detalle.setAlignment(Pos.CENTER);
         detalle.getStyleClass().add("detail-container");
 
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream(p.getImagen())));
+        ImageView img = new ImageView(new Image(getClass().getResourceAsStream(b.getImagen())));
         img.setFitHeight(150);
         img.setFitWidth(150);
         img.getStyleClass().add("item-image");
 
-        Text nombre = new Text(p.getNombre());
+        Text nombre = new Text(b.getNombre());
         nombre.getStyleClass().add("item-name");
 
-        Text descripcion = new Text(p.getDescripcion());
+        Text descripcion = new Text(b.getDescripcion());
         descripcion.getStyleClass().add("item-description");
 
-        Text precioBase = new Text(String.format("Precio: $%.2f", p.getPrecio()));
+        Text precioBase = new Text(String.format("Precio: $%.2f", b.getPrecio()));
         precioBase.getStyleClass().add("item-price");
 
-        Text total = new Text(String.format("Total: $%.2f", p.getPrecio()));
+        Text total = new Text(String.format("Total: $%.2f", b.getPrecio()));
         total.getStyleClass().add("item-price");
 
         Button btnMenos = new Button("-");
@@ -115,14 +115,14 @@ public class PlatillosView {
             if (cantidadActual[0] > 1) {
                 cantidadActual[0]--;
                 cantidad.setText(String.valueOf(cantidadActual[0]));
-                total.setText(String.format("Total: $%.2f", p.getPrecio() * cantidadActual[0]));
+                total.setText(String.format("Total: $%.2f", b.getPrecio() * cantidadActual[0]));
             }
         });
 
         btnMas.setOnAction(e -> {
             cantidadActual[0]++;
             cantidad.setText(String.valueOf(cantidadActual[0]));
-            total.setText(String.format("Total: $%.2f", p.getPrecio() * cantidadActual[0]));
+            total.setText(String.format("Total: $%.2f", b.getPrecio() * cantidadActual[0]));
         });
 
         HBox controles = new HBox(btnMenos, cantidad, btnMas);
@@ -131,7 +131,7 @@ public class PlatillosView {
         Button btnOrdenar = new Button("Ordenar");
         btnOrdenar.getStyleClass().add("order-button");
         btnOrdenar.setOnAction(e -> {
-            System.out.println("Platillo ordenado: " + p.getNombre() + " x" + cantidadActual[0]);
+            System.out.println("Bebida ordenada: " + b.getNombre() + " x" + cantidadActual[0]);
         });
 
         Button btnRegresar = new Button("Regresar");
@@ -157,17 +157,17 @@ public class PlatillosView {
             ((Stage) root.getScene().getWindow()).close();
         });
 
-        ArrayList<Platillo> platillos = cargarPlatillos();
-        FlowPane listaPlatillos = new FlowPane();
-        listaPlatillos.setPadding(new Insets(10));
-        listaPlatillos.setHgap(15);
-        listaPlatillos.setVgap(15);
+        ArrayList<Bebida> bebidas = cargarBebidas();
+        FlowPane contenedor = new FlowPane();
+        contenedor.setPadding(new Insets(10));
+        contenedor.setHgap(15);
+        contenedor.setVgap(15);
 
-        for (Platillo p : platillos) {
-            listaPlatillos.getChildren().add(crearBotonPlatillo(p, root));
+        for (Bebida b : bebidas) {
+            contenedor.getChildren().add(crearBotonBebida(b, root));
         }
 
-        mainContainer.getChildren().addAll(btnRegresar, listaPlatillos);
+        mainContainer.getChildren().addAll(btnRegresar, contenedor);
         return mainContainer;
     }
 }

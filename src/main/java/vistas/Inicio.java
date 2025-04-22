@@ -1,5 +1,6 @@
 package vistas;
 
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Inicio {
@@ -18,16 +20,17 @@ public class Inicio {
         HBox topBar = new HBox(20); // Espacio entre botones
         topBar.setPadding(new Insets(15));
         topBar.setAlignment(Pos.CENTER_LEFT);
-        topBar.setStyle("-fx-background-color: #f0f0f0;");
+        topBar.getStyleClass().add("top-bar");
 
         // Crear los botones con imagen
         Button btnPlatillos = crearBotonConImagen("Platillos", "/Image/plato.png");
         Button btnBebidas = crearBotonConImagen("Bebidas", "/Image/bebidas.png");
         Button btnMesa = crearBotonConImagen("Mesa", "/Image/mesa.png");
         Button btnTicket = crearBotonConImagen("Ticket", "/Image/ticket.png");
-        Button btnAdmin = crearBotonConImagen("Admin", "/Image/administrador.png");
+        Button btnAdmin = crearBotonConImagen("Admin", "/Image/admin.png");
 
         btnPlatillos.setOnAction(e -> new PlatillosView(root));
+        btnBebidas.setOnAction(e -> new BebidasView(root));
 
         // Agregar botones a la barra superior
         topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa, btnTicket, btnAdmin);
@@ -35,7 +38,22 @@ public class Inicio {
         // Agregar la barra al layout principal
         root.setTop(topBar);
 
-        Scene escena = new Scene(root, 800, 600);
+        // Crear el área central con la imagen del restaurante
+        StackPane centerPane = new StackPane();
+        centerPane.setAlignment(Pos.CENTER);
+        centerPane.setPadding(new Insets(20));
+
+        // Cargar la imagen del restaurante
+        ImageView restaurantImage = new ImageView(new Image(getClass().getResourceAsStream("/Image/restaurante.png")));
+        restaurantImage.setPreserveRatio(true);
+        restaurantImage.setFitWidth(500); // Ajustar según necesidad
+
+        centerPane.getChildren().add(restaurantImage);
+        root.setCenter(centerPane);
+
+        Scene escena = new Scene(root, 1000, 700);
+        escena.getStylesheets().add(getClass().getResource("/styles/estilo.css").toExternalForm());
+
         stage.setScene(escena);
         stage.setTitle("Interfaz Restaurante");
         stage.show();
@@ -49,9 +67,7 @@ public class Inicio {
 
         Button boton = new Button(texto, imageView);
         boton.setContentDisplay(javafx.scene.control.ContentDisplay.TOP);
-        boton.setStyle("-fx-font-size: 14px;");
+        boton.getStyleClass().add("button");
         return boton;
     }
 }
-
-
