@@ -1,5 +1,6 @@
 package com.example.tab2025;
 
+
 import com.example.Componentes.Hilo;
 import com.example.modelos.Conexion;
 import javafx.application.Application;
@@ -27,7 +28,7 @@ public class HelloApplication extends Application {
         mitRompecabeza.setOnAction(actionEvent -> new Rompecabezas());
 
         mitRestaurante = new MenuItem("Restaurante");
-        mitRestaurante.setOnAction(actionEvent -> new ListaClientes());
+        mitRestaurante.setOnAction(actionEvent -> new Inicio());
 
 
         mitHilo = new MenuItem("Celayork");

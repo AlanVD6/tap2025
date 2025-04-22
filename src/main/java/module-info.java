@@ -9,6 +9,7 @@ module com.example.tab2025 {
     requires mysql.connector.j;
     requires java.sql;
     requires java.desktop;
+    requires itextpdf;
     opens  com.example.modelos;
 
 }
