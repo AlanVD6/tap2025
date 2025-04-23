@@ -1,7 +1,6 @@
 package vistas;
 
 import com.example.modelos.CategoriaDAO;
-import com.mysql.cj.xdevapi.Table;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -9,33 +8,38 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Categoria {
+public class Categoria extends Stage {  // Heredar de Stage para usar métodos como setTitle y show
 
     private Button btnGuardar;
     private TextField txtCategoria;
     private VBox vBox;
-    private Categoria objC;
+    private CategoriaDAO objC;  // Cambiado de Categoria a CategoriaDAO
     private Scene escena;
     private TableView<CategoriaDAO> tbvClientes;
 
-    public Cliente (TableView<CategoriaDAO> tbvCat, CategoriaDAO obj){
-
+    public Categoria(TableView<CategoriaDAO> tbvCat, CategoriaDAO obj) {  // Corregido el nombre del constructor
         this.tbvClientes = tbvCat;
         CrearUI();
 
-        if (obj == null){
-
-            new CategoriaDAO();
+        if (obj == null) {
+            this.objC = new CategoriaDAO();  // Asignar el nuevo objeto a objC
         } else {
-
             objC = obj;
-
             txtCategoria.setText(objC.getCategoria());
         }
 
         this.setTitle("Añadir categoría");
         this.setScene(escena);
         this.show();
+    }
 
+    private void CrearUI() {
+        // Implementación para crear la interfaz de usuario
+        vBox = new VBox();
+        txtCategoria = new TextField();
+        btnGuardar = new Button("Guardar");
+
+        vBox.getChildren().addAll(txtCategoria, btnGuardar);
+        escena = new Scene(vBox, 300, 200);
     }
 }

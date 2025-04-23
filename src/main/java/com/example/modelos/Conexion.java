@@ -7,7 +7,7 @@ public class Conexion {
 
     private static String DB = "Restaurantec";
     private static String USER = "admin";
-    private static String PWD = "123";
+    private static String PWD = "1234";
     private static String HOST = "localhost"; // 127.0.0.1
     private static String PORT = "3306";
 
