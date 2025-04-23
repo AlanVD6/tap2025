@@ -195,3 +195,14 @@
 .center-pane {
     -fx-background-color: #f9f9f9;
 }
+/* Estilo para mesas ocupadas */
+.item-container:disabled {
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+
+/* Estilo para el texto de mesa ocupada */
+.occupied-text {
+    -fx-fill: #e74c3c;
+    -fx-font-size: 12px;
+}

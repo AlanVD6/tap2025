@@ -31,6 +31,8 @@ public class Inicio {
 
         btnPlatillos.setOnAction(e -> new PlatillosView(root));
         btnBebidas.setOnAction(e -> new BebidasView(root));
+        // En el constructor de la clase Inicio, después de crear los botones:
+        btnMesa.setOnAction(e -> new MesaView(root));
 
         // Agregar botones a la barra superior
         topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa, btnTicket, btnAdmin);
