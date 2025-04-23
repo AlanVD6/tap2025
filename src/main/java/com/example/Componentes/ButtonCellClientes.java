@@ -10,11 +10,11 @@ import javafx.scene.control.TableCell;
 
 import java.util.Optional;
 
-public class ButtonCell extends TableCell<ClientesDAO,String> {
+public class ButtonCellClientes extends TableCell<ClientesDAO,String> {
 
     private Button btnCelda;
     private String strLabelBtn;
-    public ButtonCell(String label){
+    public ButtonCellClientes(String label){
 
         strLabelBtn = label;
         btnCelda = new Button(strLabelBtn);

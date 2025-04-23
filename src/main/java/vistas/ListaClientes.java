@@ -1,6 +1,6 @@
 package vistas;
 
-import com.example.Componentes.ButtonCell;
+import com.example.Componentes.ButtonCellClientes;
 import com.example.modelos.ClientesDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -29,8 +29,8 @@ public class ListaClientes extends Stage {
         btnAgregar = new Button();
         btnAgregar.setOnAction(event -> new Cliente(tbvClientes, null));
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
-        imv.setFitWidth(20);
-        imv.setFitHeight(20);
+            imv.setFitWidth(20);
+            imv.setFitHeight(20);
         btnAgregar.setGraphic(imv);
         tlbMenu = new ToolBar(btnAgregar);
         CreateTable();
@@ -53,14 +53,14 @@ public class ListaClientes extends Stage {
         tbcEditar.setCellFactory(new Callback<TableColumn<ClientesDAO, String>, TableCell<ClientesDAO, String>>() {
             @Override
             public TableCell<ClientesDAO, String> call(TableColumn<ClientesDAO, String> param) {
-                return new ButtonCell("Editar");
+                return new ButtonCellClientes("Editar");
             }
         });
         TableColumn<ClientesDAO,String> tbcEliminar = new TableColumn<>("Eliminar");
         tbcEliminar.setCellFactory(new Callback<TableColumn<ClientesDAO, String>, TableCell<ClientesDAO, String>>() {
             @Override
             public TableCell<ClientesDAO, String> call(TableColumn<ClientesDAO, String> param) {
-                return new ButtonCell("Eliminar");
+                return new ButtonCellClientes("Eliminar");
             }
         });
 
