@@ -38,8 +38,25 @@ public class Categoria extends Stage {  // Heredar de Stage para usar métodos c
         vBox = new VBox();
         txtCategoria = new TextField();
         btnGuardar = new Button("Guardar");
+        btnGuardar.setOnAction(event -> {
+
+            objC.setCategoria(txtCategoria.getText());
+
+            if (objC.getIdCat() > 0) {
+
+                objC.UPDATE();
+            } else {
+
+                objC.INSERT();
+            }
+
+            tbvClientes.setItems(objC.SELECT());
+            tbvClientes.refresh();
+
+            this.close();
+        });
 
         vBox.getChildren().addAll(txtCategoria, btnGuardar);
-        escena = new Scene(vBox, 300, 200);
+        escena = new Scene(vBox, 120, 150);
     }
 }

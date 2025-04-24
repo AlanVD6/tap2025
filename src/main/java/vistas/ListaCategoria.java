@@ -2,7 +2,6 @@ package vistas;
 
 import com.example.Componentes.ButtonCelCategoria;
 import com.example.modelos.CategoriaDAO;
-import com.example.modelos.ClientesDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -40,7 +39,9 @@ public class ListaCategoria {
     }
 
     private void CreateTable() {
+
         CategoriaDAO objC = new CategoriaDAO();
+
         TableColumn<CategoriaDAO, String> tbcCategoria = new TableColumn<>("Categoria");
 
         TableColumn<CategoriaDAO, String> tbcEditar = new TableColumn<>("Editar");
@@ -50,6 +51,16 @@ public class ListaCategoria {
                 return new ButtonCelCategoria("Editar");
             }
         });
-        tbvCategoria.getColumns().addAll(tbcCategoria, tbcEditar);
+
+        TableColumn<CategoriaDAO, String> tbcEliminar = new TableColumn<>("Eliminar");
+        tbcEditar.setCellFactory(new Callback<TableColumn<CategoriaDAO, String>, TableCell<CategoriaDAO, String>>() {
+            @Override
+            public TableCell<CategoriaDAO, String> call(TableColumn<CategoriaDAO, String> param) {
+                return new ButtonCelCategoria("Eliminar");
+            }
+        });
+
+        tbvCategoria.getColumns().addAll(tbcCategoria, tbcEditar, tbcEliminar);
+        tbvCategoria.setItems(objC.SELECT());
     }
 }
