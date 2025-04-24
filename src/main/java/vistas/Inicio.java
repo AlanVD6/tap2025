@@ -1,6 +1,5 @@
 package vistas;
 
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -31,8 +30,8 @@ public class Inicio {
 
         btnPlatillos.setOnAction(e -> new PlatillosView(root));
         btnBebidas.setOnAction(e -> new BebidasView(root));
-        // En el constructor de la clase Inicio, después de crear los botones:
         btnMesa.setOnAction(e -> new MesaView(root));
+        btnAdmin.setOnAction(e -> new LoginView());
 
         // Agregar botones a la barra superior
         topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa, btnTicket, btnAdmin);
