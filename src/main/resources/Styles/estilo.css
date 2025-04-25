@@ -185,11 +185,6 @@
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
 }
-/* Estilo para la imagen central del restaurante */
-.restaurant-image {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5;
-    -fx-background-radius: 10px;
-}
 
 /* Estilo para el panel central */
 .center-pane {
@@ -240,8 +235,8 @@
 .login-button:hover {
     -fx-background-color: #2980b9;
 }
-
 .error-message {
     -fx-text-fill: #e74c3c;
     -fx-font-size: 12px;
 }
+
