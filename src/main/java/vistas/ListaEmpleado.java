@@ -6,9 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ListaEmpleado{
+public class ListaEmpleado extends Stage {
 
     private ToolBar tlbMenu;
     private TableView<EmpleadoDAO> tbvEmpleado;
@@ -16,7 +17,13 @@ public class ListaEmpleado{
     private Scene escena;
     private Button btnAgregar;
 
-    public ListaEmpleado() { CrearUI(); }
+    public ListaEmpleado() {
+
+        CrearUI();
+        this.setTitle("Lista de Empleados");
+        this.setScene(escena);
+        this.show();
+    }
 
     private void CrearUI() {
 

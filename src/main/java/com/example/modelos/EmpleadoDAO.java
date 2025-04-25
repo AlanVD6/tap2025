@@ -59,20 +59,22 @@ public class EmpleadoDAO {
 
     public void UPDATE() {
 
-        String query = "UPDATE empelado SET nombre = '"
-                + nombre + "', nacimiento = '" + nacimiento + "', CURP = '" + CURP + "', telefono = '" + telefono + "', sueldo = '" + sueldo + "', usuario = '" + usuario + "', contrasena = '" + contrasena +
-                "' WHERE idEmp = '" + idEmp;
+        String query = "UPDATE empleado SET nombre = '"
+                + nombre + "', nacimiento = '" + nacimiento + "', CURP = '" + CURP + "', telefono = '" + telefono
+                + "', sueldo = '" + sueldo + "', usuario = '" + usuario + "', contrasena = '" + contrasena
+                + "' WHERE idEmp = '" + idEmp + "'";
 
-        try{
+        try {
 
             Statement stmt = Conexion.connection.createStatement();
             stmt.executeUpdate(query);
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
     }
+
 
     public void DELETE(){
         String query = "DELETE FROM empleado WHERE idEmp = " + idEmp;
@@ -91,33 +93,37 @@ public class EmpleadoDAO {
     public ObservableList<EmpleadoDAO> SELECT() {
 
         String query = "SELECT * FROM empleado";
+
         ObservableList<EmpleadoDAO> listaC = FXCollections.observableArrayList();
         EmpleadoDAO objC;
 
-        try{
+        try {
 
             Statement stmt = Conexion.connection.createStatement();
             ResultSet res = stmt.executeQuery(query);
 
-            while (res.next()){
+            while (res.next()) {
 
                 objC = new EmpleadoDAO();
 
-                objC.setIdEmp(res.getInt("idCte"));
-                objC.setNombre(res.getString("Empleado"));
-                objC.setNacimiento(res.getString("Nacimiento"));
+                objC.setIdEmp(res.getInt("idEmp"));
+                objC.setNombre(res.getString("nombre"));
+                objC.setNacimiento(res.getString("nacimiento"));
                 objC.setCURP(res.getString("CURP"));
-                objC.setTelefono(res.getString("Teléfono"));
-                objC.setSueldo(res.getFloat("Sueldo"));
-                objC.setUsuario(res.getString("Usuario"));
-                objC.setContrasena(res.getString("Contrasena"));
+                objC.setTelefono(res.getString("telefono"));
+                objC.setSueldo(res.getFloat("sueldo"));
+                objC.setUsuario(res.getString("usuario"));
+                objC.setContrasena(res.getString("contrasena"));
+
+                listaC.add(objC);
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
 
         return listaC;
     }
+
 }

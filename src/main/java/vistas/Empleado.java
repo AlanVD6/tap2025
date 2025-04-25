@@ -2,13 +2,12 @@ package vistas;
 
 import com.example.modelos.EmpleadoDAO;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Stack;
 
 public class Empleado extends Stage {
 
@@ -25,6 +24,26 @@ public class Empleado extends Stage {
         this.tbvEmpleado = tbvEmp;
 
         CrearUI();
+
+        if (obj == null) {
+
+            objC = new EmpleadoDAO();
+        } else {
+
+            objC = obj;
+
+            txtNombre.setText(objC.getNombre());
+            txtNacimiento.setText(objC.getNacimiento());
+            txtCURP.setText(objC.getCURP());
+            txtTelefono.setText(objC.getTelefono());
+            txtSueldo.setText(String.valueOf(objC.getSueldo()));
+            txtUsuario.setText(objC.getUsuario());
+            txtContrasena.setText(objC.getContrasena());
+        }
+
+        this.setTitle("Registrar Empleado");
+        this.setScene(escena);
+        this.show();
     }
 
     private void CrearUI() {
@@ -46,13 +65,20 @@ public class Empleado extends Stage {
             objC.setNacimiento(txtNacimiento.getText());
             objC.setCURP(txtCURP.getText());
             objC.setTelefono(txtTelefono.getText());
-            objC.setSueldo(Float.parseFloat(txtSueldo.getText()));
+            try {
+                float sueldo = Float.parseFloat(txtSueldo.getText());
+                objC.setSueldo(sueldo);
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Error de formato", "El sueldo debe ser un número decimal válido.");
+                return;
+            }
             objC.setUsuario(txtUsuario.getText());
             objC.setContrasena(txtContrasena.getText());
 
             if (objC.getIdEmp() > 0) {
 
                 objC.UPDATE();
+
             } else {
 
                 objC.INSERT();
@@ -68,4 +94,12 @@ public class Empleado extends Stage {
         escena = new Scene(vBox, 120, 150);
     }
 
+    private void mostrarAlerta(String titulo, String mensaje) {
+
+        Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
 }

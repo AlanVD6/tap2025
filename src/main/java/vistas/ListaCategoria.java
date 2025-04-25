@@ -6,9 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ListaCategoria {
+public class ListaCategoria extends Stage {
 
     private ToolBar tlbMenu;
     private TableView<CategoriaDAO> tbvCategoria;
@@ -17,7 +18,11 @@ public class ListaCategoria {
     private Button btnAgregar;
 
     public ListaCategoria() {
+
         CrearUI();
+        this.setTitle("Lista de Categorias");
+        this.setScene(escena);
+        this.show();
     }
 
     private void CrearUI() {
