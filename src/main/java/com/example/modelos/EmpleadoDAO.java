@@ -62,7 +62,7 @@ public class EmpleadoDAO {
         String query = "UPDATE empleado SET nombre = '"
                 + nombre + "', nacimiento = '" + nacimiento + "', CURP = '" + CURP + "', telefono = '" + telefono
                 + "', sueldo = '" + sueldo + "', usuario = '" + usuario + "', contrasena = '" + contrasena
-                + "' WHERE idEmp = '" + idEmp + "'";
+                + "' WHERE idEmp = " + idEmp;
 
         try {
 
@@ -74,7 +74,6 @@ public class EmpleadoDAO {
             e.printStackTrace();
         }
     }
-
 
     public void DELETE(){
         String query = "DELETE FROM empleado WHERE idEmp = " + idEmp;
