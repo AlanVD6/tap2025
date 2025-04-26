@@ -24,16 +24,17 @@ public class Inicio {
         Button btnPlatillos = crearBotonConImagen("Platillos", "/Image/plato.png");
         Button btnBebidas = crearBotonConImagen("Bebidas", "/Image/bebidas.png");
         Button btnMesa = crearBotonConImagen("Mesa", "/Image/mesa.png");
-
+        Button btnReserva=crearBotonConImagen("Reservacion","/Image/reservar.png");
         Button btnTicket = crearBotonConImagen("Ticket", "/Image/ticket.png");
         Button btnAdmin = crearBotonConImagen("Admin", "/Image/admin.png");
 
         btnPlatillos.setOnAction(e -> new PlatillosView(root));
         btnBebidas.setOnAction(e -> new BebidasView(root));
         btnMesa.setOnAction(e -> new MesaView(root));
+        btnReserva.setOnAction(e -> new ReservacionView(root));
         btnAdmin.setOnAction(e -> new LoginView());
 
-        topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa, btnTicket, btnAdmin);
+        topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa,btnReserva, btnTicket, btnAdmin);
         root.setTop(topBar);
 
         StackPane centerPane = new StackPane();

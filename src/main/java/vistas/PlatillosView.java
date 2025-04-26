@@ -4,6 +4,7 @@ import com.example.modelos.Platillo;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -43,7 +44,14 @@ public class PlatillosView {
             listaPlatillos.getChildren().add(crearBotonPlatillo(p, root));
         }
 
-        mainContainer.getChildren().addAll(btnRegresar, listaPlatillos);
+        // Configurar ScrollPane
+        ScrollPane scrollPane = new ScrollPane(listaPlatillos);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Solo scroll vertical
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+
+        mainContainer.getChildren().addAll(btnRegresar, scrollPane);
         root.setCenter(mainContainer);
     }
 
@@ -52,6 +60,12 @@ public class PlatillosView {
         lista.add(new Platillo("Milanesa de pollo", 50.00, "1 pz milanesa de pollo, 100gr papas fritas, 50gr ensalada", "/Image/milanesa.jpg"));
         lista.add(new Platillo("Chorizo en salsa", 40.00, "150gr de chorizo", "/Image/chorizo.jpg"));
         lista.add(new Platillo("Verduras salteadas", 35.00, "50gr zanahoria, papa, chayote, cebolla, jitomate", "/Image/verduras.jpg"));
+
+        lista.add(new Platillo("Pasta Alfredo", 55.00, "Pasta con salsa alfredo y pollo", "/Image/pasta.jpg"));
+        lista.add(new Platillo("Enchiladas rojas", 45.00, "Tortillas rellenas bañadas en salsa roja", "/Image/enchiladas.jpg"));
+        lista.add(new Platillo("Hamburguesa clásica", 60.00, "Carne de res, queso, lechuga, tomate", "/Image/hamburguesa.jpg"));
+        lista.add(new Platillo("Sopa de tortilla", 30.00, "Sopa con tiras de tortilla, aguacate y queso", "/Image/sopa.jpg"));
+        lista.add(new Platillo("Pizza margarita", 70.00, "Pizza con salsa de tomate, mozzarella y albahaca", "/Image/pizza.jpg"));
         return lista;
     }
 
@@ -167,8 +181,14 @@ public class PlatillosView {
             listaPlatillos.getChildren().add(crearBotonPlatillo(p, root));
         }
 
-        mainContainer.getChildren().addAll(btnRegresar, listaPlatillos);
+        // Configurar ScrollPane para la vista principal también
+        ScrollPane scrollPane = new ScrollPane(listaPlatillos);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+
+        mainContainer.getChildren().addAll(btnRegresar, scrollPane);
         return mainContainer;
     }
 }
-
