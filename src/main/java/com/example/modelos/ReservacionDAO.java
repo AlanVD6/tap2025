@@ -39,7 +39,7 @@ public class ReservacionDAO {
 
     public void INSERT() {
 
-        String query = "INSERT INTO reservacion (nomCte, fecha, hora, personas, telefono) VALUES ('" +
+        String query = "INSERT INTO reservacion (idCte, nomCte, fecha, hora, personas, telefono) VALUES ('" + idCte + ",'" +
                 nomCte + "', '" + fecha + "', '" + hora + "', '" + personas + "', '" + telefono + "')";
 
         try{
@@ -55,7 +55,7 @@ public class ReservacionDAO {
 
     public void UPDATE() {
 
-        String query = "UPDATE reservacion SET nomCte = '" + nomCte + "', fecha = '" + fecha + "', hora = '" +
+        String query = "UPDATE reservacion SET idCte = '" + idCte + "', nomCte = '" + nomCte + "', fecha = '" + fecha + "', hora = '" +
                 hora + "', personas = '" + personas + "', telefono = '" + telefono + "' WHERE idReserva = " + idReserva;
 
         try{
