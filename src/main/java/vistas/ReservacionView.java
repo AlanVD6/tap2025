@@ -163,12 +163,13 @@ public class ReservacionView {
 
         // Guardar reservación
         ReservacionDAO reservacion = new ReservacionDAO();
+        reservacion.setIdCte(cliente.getIdCte());
         reservacion.setNomCte(tfNombre.getText());
         reservacion.setFecha(dpFecha.getValue().toString());
         reservacion.setHora(cbHora.getValue());
         reservacion.setPersonas(spPersonas.getValue());
         reservacion.setTelefono(tfTelefono.getText());
-        reservacion.setIdCte(cliente.getIdCte());
+
         reservacion.INSERT();
 
         mostrarAlerta("Éxito", "Reservación registrada correctamente para la Mesa " +

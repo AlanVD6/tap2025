@@ -55,15 +55,22 @@ public class ClientesDAO {
     }
 
     public void INSERT(){
-        String query = "INSERT INTO clientes(nomCte,telCte,direccion,emailCte) " +
-                "values('"+nomCte+"','"+telCte+"','"+direccion+"','"+emailCte+"')";
-        try{
+        String query = "INSERT INTO clientes(nomCte, telCte, direccion, emailCte) " +
+                "VALUES ('" + nomCte + "','" + telCte + "','" + direccion + "','" + emailCte + "')";
+        try {
+
             Statement stmt = Conexion.connection.createStatement();
-            stmt.executeUpdate(query);
-        }catch(Exception e){
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                this.idCte = generatedKeys.getInt(1);
+            }
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
+
     public void UPDATE(){
         String query = "UPDATE clientes SET nomCte = '"+nomCte+"'," +
                 "telCte = '"+telCte+"',direccion = '"+direccion+"'," +

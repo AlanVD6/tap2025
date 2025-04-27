@@ -39,8 +39,8 @@ public class ReservacionDAO {
 
     public void INSERT() {
 
-        String query = "INSERT INTO reservacion (nomCte, fecha, hora, personas, telefono) VALUES ('" +
-                nomCte + "', '" + fecha + "', '" + hora + "', '" + personas + "', '" + telefono + "')";
+        String query = "INSERT INTO reservacion (idCte, nomCte, fecha, hora, personas, telefono) VALUES (" +
+                idCte + ", '" + nomCte + "', '" + fecha + "', '" + hora + "', '" + personas + "', '" + telefono + "')";
 
         try{
 
