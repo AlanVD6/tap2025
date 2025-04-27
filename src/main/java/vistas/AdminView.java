@@ -48,16 +48,16 @@ public class AdminView extends Stage {
         // Botón Empleados
         Button btnEmpleados = crearBotonAdmin("Empleados", "/Image/empleados.png");
         btnEmpleados.setOnAction(e -> {
-            // Aquí iría la lógica para abrir la vista de empleados
-            System.out.println("Abriendo gestión de empleados");
+            ListaEmpleado listaempleado = new ListaEmpleado();
+            listaempleado.show();
         });
         grid.add(btnEmpleados, 0, 0);
 
         // Botón Categoría
         Button btnCategoria = crearBotonAdmin("Categoría", "/Image/categoria.png");
         btnCategoria.setOnAction(e -> {
-            // Aquí iría la lógica para abrir la vista de categorías
-            System.out.println("Abriendo gestión de categorías");
+            ListaCategoria listacategoria = new ListaCategoria();
+            listacategoria.show();
         });
         grid.add(btnCategoria, 1, 0);
 
@@ -68,6 +68,29 @@ public class AdminView extends Stage {
             System.out.println("Abriendo reporte de ventas");
         });
         grid.add(btnVentas, 2, 0);
+
+        // Botón Proveedor
+        Button btnProveedor = crearBotonAdmin("Proveedor", "/Image/proveedor.png");
+        btnProveedor.setOnAction(e -> {
+
+        });
+        grid.add(btnProveedor, 0, 1);
+
+        // Botón Insumos
+        Button btnInsumos = crearBotonAdmin("Insumos", "/Image/insumos.png");
+        btnInsumos.setOnAction(e -> {
+            // Aquí iría la lógica para abrir la vista de insumos
+            System.out.println("Abriendo gestión de insumos");
+        });
+        grid.add(btnInsumos, 1, 1);
+
+        // Botón Producto
+        Button btnProducto = crearBotonAdmin("Producto", "/Image/producto.png");
+        btnProducto.setOnAction(e -> {
+            // Aquí iría la lógica para abrir la vista de productos
+            System.out.println("Abriendo gestión de productos");
+        });
+        grid.add(btnProducto, 2, 1);
 
         root.setCenter(grid);
 
