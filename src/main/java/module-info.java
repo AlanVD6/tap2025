@@ -10,6 +10,7 @@ module com.example.tab2025 {
     requires java.sql;
     requires java.desktop;
     requires itextpdf;
+    requires com.google.protobuf;
     opens  com.example.modelos;
 
 }
