@@ -19,45 +19,44 @@ import java.util.ArrayList;
 public class BebidasView {
 
     public BebidasView(BorderPane root) {
-        // Configurar el fondo con imagen
+        // Configurar el fondo
         root.getStyleClass().add("background-with-image");
 
-        // Crear contenedor principal
-        VBox mainContainer = new VBox();
-        mainContainer.getStyleClass().add("main-container");
-        mainContainer.setSpacing(20);
+        // Crear contenedor principal con ScrollPane
+        ScrollPane scrollPrincipal = new ScrollPane();
+        scrollPrincipal.setFitToWidth(true);
+        scrollPrincipal.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+
+        VBox mainContainer = new VBox(15);
+        mainContainer.setPadding(new Insets(20));
         mainContainer.setAlignment(Pos.TOP_CENTER);
+        mainContainer.getStyleClass().add("main-container");
 
         // Botón de regresar
         Button btnRegresar = new Button("Regresar");
         btnRegresar.getStyleClass().add("back-button");
         btnRegresar.setOnAction(e -> {
+            // Limpiar el estilo de fondo al regresar
             root.getStyleClass().remove("background-with-image");
             new Inicio();
             ((Stage) root.getScene().getWindow()).close();
         });
 
+        // Contenedor de bebidas con FlowPane (similar a PlatillosView)
         ArrayList<Bebida> bebidas = cargarBebidas();
-        FlowPane contenedorBebidas = new FlowPane();
-        contenedorBebidas.setPadding(new Insets(20));
-        contenedorBebidas.setHgap(20);
-        contenedorBebidas.setVgap(20);
-        contenedorBebidas.setAlignment(Pos.CENTER);
+        FlowPane listaBebidas = new FlowPane();
+        listaBebidas.setPadding(new Insets(10));
+        listaBebidas.setHgap(15);
+        listaBebidas.setVgap(15);
+        listaBebidas.setAlignment(Pos.TOP_CENTER); // Cambiado de CENTER a TOP_CENTER
 
         for (Bebida b : bebidas) {
-            contenedorBebidas.getChildren().add(crearBotonBebida(b, root));
+            listaBebidas.getChildren().add(crearBotonBebida(b, root));
         }
 
-        // Configurar ScrollPane
-        ScrollPane scrollPane = new ScrollPane(contenedorBebidas);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
-        scrollPane.getStyleClass().add("scroll-pane");
-
-        mainContainer.getChildren().addAll(btnRegresar, scrollPane);
+        // Configurar ScrollPane (igual que PlatillosView)
+        scrollPrincipal.setContent(listaBebidas);
+        mainContainer.getChildren().addAll(btnRegresar, scrollPrincipal);
         root.setCenter(mainContainer);
     }
 
@@ -75,21 +74,25 @@ public class BebidasView {
     }
 
     private VBox crearBotonBebida(Bebida b, BorderPane root) {
+        // Mismo estilo que PlatillosView
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream(b.getImagen())));
-        img.setFitHeight(100);
-        img.setFitWidth(100);
+        img.setFitHeight(80);
+        img.setFitWidth(80);
         img.getStyleClass().add("item-image");
 
         Text nombre = new Text(b.getNombre());
         nombre.getStyleClass().add("item-name");
 
+        Text descripcion = new Text(b.getDescripcion());
+        descripcion.getStyleClass().add("item-description");
+        descripcion.setWrappingWidth(200); // Añadido para mejor formato
+
         Text precio = new Text(String.format("$%.2f", b.getPrecio()));
         precio.getStyleClass().add("item-price");
 
-        VBox box = new VBox(img, nombre, precio);
+        VBox box = new VBox(img, nombre, descripcion, precio);
         box.setAlignment(Pos.CENTER);
-        box.setSpacing(10);
-        box.setPadding(new Insets(10));
+        box.setSpacing(5);
         box.getStyleClass().add("item-container");
 
         box.setOnMouseClicked(e -> mostrarDetalleBebida(b, root));
@@ -98,6 +101,7 @@ public class BebidasView {
     }
 
     private void mostrarDetalleBebida(Bebida b, BorderPane root) {
+        // Implementación similar a PlatillosView
         VBox detalle = new VBox();
         detalle.setPadding(new Insets(20));
         detalle.setSpacing(15);
@@ -147,7 +151,6 @@ public class BebidasView {
 
         HBox controles = new HBox(btnMenos, cantidad, btnMas);
         controles.getStyleClass().add("quantity-controls");
-        controles.setAlignment(Pos.CENTER);
 
         Button btnOrdenar = new Button("Ordenar");
         btnOrdenar.getStyleClass().add("order-button");
@@ -166,10 +169,10 @@ public class BebidasView {
     }
 
     private VBox createMainView(BorderPane root) {
+        // Implementación similar a PlatillosView
         VBox mainContainer = new VBox();
         mainContainer.getStyleClass().add("main-container");
         mainContainer.setSpacing(20);
-        mainContainer.setAlignment(Pos.TOP_CENTER);
 
         Button btnRegresar = new Button("Regresar");
         btnRegresar.getStyleClass().add("back-button");
@@ -180,24 +183,20 @@ public class BebidasView {
         });
 
         ArrayList<Bebida> bebidas = cargarBebidas();
-        FlowPane contenedorBebidas = new FlowPane();
-        contenedorBebidas.setPadding(new Insets(20));
-        contenedorBebidas.setHgap(20);
-        contenedorBebidas.setVgap(20);
-        contenedorBebidas.setAlignment(Pos.CENTER);
+        FlowPane listaBebidas = new FlowPane();
+        listaBebidas.setPadding(new Insets(10));
+        listaBebidas.setHgap(15);
+        listaBebidas.setVgap(15);
 
         for (Bebida b : bebidas) {
-            contenedorBebidas.getChildren().add(crearBotonBebida(b, root));
+            listaBebidas.getChildren().add(crearBotonBebida(b, root));
         }
 
-        // Configurar ScrollPane
-        ScrollPane scrollPane = new ScrollPane(contenedorBebidas);
+        ScrollPane scrollPane = new ScrollPane(listaBebidas);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
-        scrollPane.getStyleClass().add("scroll-pane");
 
         mainContainer.getChildren().addAll(btnRegresar, scrollPane);
         return mainContainer;

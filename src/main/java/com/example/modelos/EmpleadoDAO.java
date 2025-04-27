@@ -124,5 +124,4 @@ public class EmpleadoDAO {
 
         return listaC;
     }
-
 }

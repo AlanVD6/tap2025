@@ -56,7 +56,7 @@ public class MesaView {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
-        scrollPane.setMinViewportWidth(800); // Ancho mínimo para evitar que se vea muy pequeño
+        scrollPane.setMinViewportWidth(800);
 
         mainContainer.getChildren().addAll(btnRegresar, scrollPane);
         root.setCenter(mainContainer);
@@ -92,17 +92,23 @@ public class MesaView {
             Text estado = new Text("Ocupada");
             estado.getStyleClass().add("occupied-text");
             box.getChildren().add(estado);
+        } else if (mesa.isReservada()) { // Nueva lógica para mesas reservadas
+            box.setDisable(true);
+            box.setStyle("-fx-opacity: 0.6;");
+            Text estado = new Text("Reservada");
+            estado.getStyleClass().add("occupied-text");
+            estado.setStyle("-fx-fill: #f39c12;"); // Color naranja para diferenciar de "Ocupada"
+            box.getChildren().add(estado);
         }
 
         box.setOnMouseClicked(e -> {
-            if (!mesa.isOcupada()) {
+            if (!mesa.isOcupada() && !mesa.isReservada()) {
                 mostrarDetalleMesa(mesa, root);
             }
         });
 
         return box;
     }
-
     private void mostrarDetalleMesa(Mesa mesa, BorderPane root) {
         VBox detalle = new VBox();
         detalle.setPadding(new Insets(20));
@@ -171,3 +177,4 @@ public class MesaView {
         return mainContainer;
     }
 }
+

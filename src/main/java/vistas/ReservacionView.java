@@ -18,8 +18,7 @@ public class ReservacionView {
     private TextField tfNombre, tfTelefono, tfDireccion, tfEmail;
     private DatePicker dpFecha;
     private Spinner<Integer> spPersonas;
-    private ComboBox<String> cbHora;
-    private ToggleGroup mesaToggleGroup;
+    private ComboBox<String> cbHora, cbMesa; // Cambiado de RadioButtons a ComboBox
     private List<Mesa> todasLasMesas;
 
     public ReservacionView(BorderPane root) {
@@ -50,7 +49,7 @@ public class ReservacionView {
         Text titulo = new Text("Nueva Reservación");
         titulo.getStyleClass().add("item-name");
 
-        // Campos del cliente
+        // Campos del cliente con labels descriptivos
         GridPane gridCliente = new GridPane();
         gridCliente.setHgap(10);
         gridCliente.setVgap(10);
@@ -74,7 +73,7 @@ public class ReservacionView {
         gridCliente.add(new Label("Email:"), 0, 3);
         gridCliente.add(tfEmail, 1, 3);
 
-        // Campos de fecha y hora
+        // Campos de fecha y hora con labels descriptivos
         GridPane gridReserva = new GridPane();
         gridReserva.setHgap(10);
         gridReserva.setVgap(10);
@@ -101,24 +100,15 @@ public class ReservacionView {
         gridReserva.add(new Label("Personas:"), 0, 2);
         gridReserva.add(spPersonas, 1, 2);
 
-        // Selección de mesas
+        // Selección de mesas como ComboBox con label descriptivo
         Text tituloMesas = new Text("Seleccione una mesa:");
         tituloMesas.getStyleClass().add("item-description");
 
-        FlowPane panelMesas = new FlowPane();
-        panelMesas.setHgap(15);
-        panelMesas.setVgap(15);
-        panelMesas.setAlignment(Pos.CENTER);
-        panelMesas.setPadding(new Insets(10));
-
-        mesaToggleGroup = new ToggleGroup();
+        cbMesa = new ComboBox<>();
         for (Mesa mesa : todasLasMesas) {
-            RadioButton rbMesa = new RadioButton("Mesa " + mesa.getNumero());
-            rbMesa.setToggleGroup(mesaToggleGroup);
-            rbMesa.setUserData(mesa);
-            rbMesa.getStyleClass().add("radio-button-mesa");
-            panelMesas.getChildren().add(rbMesa);
+            cbMesa.getItems().add("Mesa " + mesa.getNumero());
         }
+        cbMesa.setPromptText("Seleccione una mesa");
 
         // Botones
         Button btnGuardar = new Button("Guardar Reservación");
@@ -129,13 +119,21 @@ public class ReservacionView {
         btnCancelar.getStyleClass().add("back-button");
         btnCancelar.setOnAction(e -> new Inicio());
 
-        HBox botones = new HBox(15, btnGuardar, btnCancelar);
-        botones.setAlignment(Pos.CENTER);
+        // Crear un HBox para poner los botones uno al lado del otro
+        HBox botones = new HBox(10); // 10 píxeles de espacio entre botones
+        botones.setAlignment(Pos.CENTER); // Centrar los botones
+        botones.getChildren().addAll(btnGuardar, btnCancelar);
 
         // Agregar todo al formulario
         formulario.getChildren().addAll(
-                titulo, gridCliente, gridReserva,
-                tituloMesas, panelMesas, botones
+                titulo,
+                new Label("Datos del Cliente:"),
+                gridCliente,
+                new Label("Detalles de la Reservación:"),
+                gridReserva,
+                tituloMesas,
+                cbMesa,
+                botones
         );
 
         scrollPrincipal.setContent(formulario);
@@ -143,17 +141,16 @@ public class ReservacionView {
     }
 
     private void guardarReservacion() {
-        // Validar campos obligatorios
         if (tfNombre.getText().isEmpty() || tfTelefono.getText().isEmpty() ||
-                mesaToggleGroup.getSelectedToggle() == null) {
+                cbMesa.getValue() == null) {
             mostrarAlerta("Error", "Nombre, teléfono y mesa son campos obligatorios");
             return;
         }
 
-        // Obtener la mesa seleccionada
-        Mesa mesaSeleccionada = (Mesa) mesaToggleGroup.getSelectedToggle().getUserData();
+        String mesaSeleccionadaStr = cbMesa.getValue();
+        int numeroMesa = Integer.parseInt(mesaSeleccionadaStr.replace("Mesa ", ""));
+        Mesa mesaSeleccionada = todasLasMesas.get(numeroMesa - 1);
 
-        // Guardar cliente
         ClientesDAO cliente = new ClientesDAO();
         cliente.setNomCte(tfNombre.getText());
         cliente.setTelCte(tfTelefono.getText());
@@ -161,7 +158,6 @@ public class ReservacionView {
         cliente.setEmailCte(tfEmail.getText());
         cliente.INSERT();
 
-        // Guardar reservación
         ReservacionDAO reservacion = new ReservacionDAO();
         reservacion.setIdCte(cliente.getIdCte());
         reservacion.setNomCte(tfNombre.getText());
@@ -169,11 +165,11 @@ public class ReservacionView {
         reservacion.setHora(cbHora.getValue());
         reservacion.setPersonas(spPersonas.getValue());
         reservacion.setTelefono(tfTelefono.getText());
-
         reservacion.INSERT();
 
-        mostrarAlerta("Éxito", "Reservación registrada correctamente para la Mesa " +
-                mesaSeleccionada.getNumero());
+        mesaSeleccionada.reservar();
+
+        mostrarAlerta("Éxito", "Reservación registrada correctamente para la " + mesaSeleccionadaStr);
         new Inicio();
     }
 
@@ -185,3 +181,4 @@ public class ReservacionView {
         alert.showAndWait();
     }
 }
+
