@@ -33,6 +33,8 @@ public class Inicio {
         btnMesa.setOnAction(e -> new MesaView(root));
         btnReserva.setOnAction(e -> new ReservacionView(root));
         btnAdmin.setOnAction(e -> new LoginView());
+        btnTicket.setOnAction(e -> new TicketView());
+
 
         topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa,btnReserva, btnTicket, btnAdmin);
         root.setTop(topBar);
