@@ -37,7 +37,6 @@ public class AdminView extends Stage {
 
         topBar.getChildren().addAll(title, spacer, btnSalir);
         root.setTop(topBar);
-
         // Contenido central con botones
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -72,7 +71,8 @@ public class AdminView extends Stage {
         // Botón Proveedor
         Button btnProveedor = crearBotonAdmin("Proveedor", "/Image/proveedor.png");
         btnProveedor.setOnAction(e -> {
-
+            ListaProveedor listaproveedor = new ListaProveedor();
+            listaproveedor.show();
         });
         grid.add(btnProveedor, 0, 1);
 
