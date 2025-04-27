@@ -61,7 +61,7 @@ public class ListaEmpleado extends Stage {
         });
 
         TableColumn<EmpleadoDAO, String> tbcEliminar = new TableColumn<>("Eliminar");
-        tbcEditar.setCellFactory(new Callback<TableColumn<EmpleadoDAO, String>, TableCell<EmpleadoDAO, String>>() {
+        tbcEliminar.setCellFactory(new Callback<TableColumn<EmpleadoDAO, String>, TableCell<EmpleadoDAO, String>>() {
             @Override
             public TableCell<EmpleadoDAO, String> call(TableColumn<EmpleadoDAO, String> param) {
                 return new ButtonCellEmpleado("Eliminar");
