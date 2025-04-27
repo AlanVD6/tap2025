@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
+import vistas.Proveedor;
 
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class ButtonCellProveedor extends TableCell<ProveedorDAO, String> {
 
             if (strLabelBtn.equals("Editar")) {
 
-                new Proveedor(this.getTableView().getItems().get(this.getIndex()));
+                new Proveedor(this.getTableView(),objC);
 
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
