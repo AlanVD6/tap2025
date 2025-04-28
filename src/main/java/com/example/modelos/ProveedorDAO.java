@@ -34,7 +34,7 @@ public class ProveedorDAO {
 
     public void UPDATE() {
 
-        String query = "UPDATE reservacion SET razonSocial = '" + razonSocial + "' WHERE idProv = " + idProv;
+        String query = "UPDATE proveedor SET razonSocial = '" + razonSocial + "' WHERE idProv = " + idProv;
 
         try{
 

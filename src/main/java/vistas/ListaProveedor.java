@@ -55,7 +55,7 @@ public class ListaProveedor extends Stage {
         ProveedorDAO objC = new ProveedorDAO();
 
         TableColumn<ProveedorDAO, String> tbcProveedor = new TableColumn<>("Proveedor");
-        tbcProveedor.setCellValueFactory(new PropertyValueFactory<>("Proveedor"));
+        tbcProveedor.setCellValueFactory(new PropertyValueFactory<>("razonSocial"));
 
         TableColumn<ProveedorDAO, String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<ProveedorDAO, String>, TableCell<ProveedorDAO, String>>() {
