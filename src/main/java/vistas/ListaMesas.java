@@ -2,6 +2,7 @@ package vistas;
 
 import com.example.Componentes.ButtonCellMesas;
 import com.example.modelos.MesaDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -45,9 +46,13 @@ public class ListaMesas extends Stage {
         btnAgregar.setGraphic(imv);
 
         tlbMenu = new ToolBar(btnAgregar);
+
         CreateTable();
-        vBox = new VBox(tlbMenu, tbvMesas);
-        escena = new Scene(vBox, 800, 600);
+
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
+        vBox.getChildren().addAll(tlbMenu, tbvMesas);
+        escena = new Scene(vBox, 900, 650);
     }
 
     private void CreateTable() {

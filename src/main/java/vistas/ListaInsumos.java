@@ -2,8 +2,10 @@ package vistas;
 
 import com.example.Componentes.ButtonCellInsumos;
 import com.example.modelos.InsumosDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,21 +37,31 @@ public class ListaInsumos extends Stage {
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
         imv.setFitWidth(20);
         imv.setFitHeight(20);
-
         btnAgregar.setGraphic(imv);
 
-        tlbMenu = new ToolBar();
+        tlbMenu = new ToolBar(btnAgregar);
+
         CreateTable();
 
-        vBox = new VBox(tlbMenu, tbvInsumos);
-        escena = new Scene(vBox, 800, 600);
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
+        vBox.getChildren().addAll(tlbMenu, tbvInsumos);
+
+        escena = new Scene(vBox, 900, 650);
     }
 
     public void CreateTable() {
 
         InsumosDAO objC = new InsumosDAO();
 
-        TableColumn<InsumosDAO, String> tbcInsumos = new TableColumn<>("Insumos");
+        TableColumn<InsumosDAO, String> tbcInsumo = new TableColumn<>("Insumo");
+        tbcInsumo.setCellValueFactory(new PropertyValueFactory<>("insumo"));
+
+        TableColumn<InsumosDAO, Float> tbcCosto = new TableColumn<>("Costo");
+        tbcCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
+
+        TableColumn<InsumosDAO, Float> tbcCantidad = new TableColumn<>("Cantidad");
+        tbcCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 
         TableColumn<InsumosDAO, String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<InsumosDAO, String>, TableCell<InsumosDAO, String>>() {
@@ -67,7 +79,7 @@ public class ListaInsumos extends Stage {
             }
         });
 
-        tbvInsumos.getColumns().addAll(tbcInsumos, tbcEditar, tbcEliminar);
+        tbvInsumos.getColumns().addAll(tbcInsumo, tbcCosto, tbcCantidad, tbcEditar, tbcEliminar);
         tbvInsumos.setItems(objC.SELECT());
     }
 }

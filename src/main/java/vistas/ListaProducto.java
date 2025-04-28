@@ -4,8 +4,10 @@ import com.example.Componentes.ButtonCellInsumos;
 import com.example.Componentes.ButtonCellProducto;
 import com.example.modelos.InsumosDAO;
 import com.example.modelos.ProductoDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,7 +27,6 @@ public class ListaProducto extends Stage {
         this.setTitle("Lista de Productos");
         this.setScene(escena);
         this.show();
-
     }
 
     public void CrearUI(){
@@ -38,14 +39,16 @@ public class ListaProducto extends Stage {
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
         imv.setFitWidth(20);
         imv.setFitHeight(20);
-
         btnAgregar.setGraphic(imv);
 
-        tlbMenu = new ToolBar();
+        tlbMenu = new ToolBar(btnAgregar);
+
         CreateTable();
 
-        vBox = new VBox(tlbMenu, tbvProducto);
-        escena = new Scene(vBox, 800, 600);
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
+        vBox.getChildren().addAll(tlbMenu, tbvProducto);
+        escena = new Scene(vBox, 900, 650);
     }
 
     public void CreateTable() {
@@ -53,6 +56,9 @@ public class ListaProducto extends Stage {
         ProductoDAO objC = new ProductoDAO();
 
         TableColumn<ProductoDAO, String> tbcProducto = new TableColumn<>("Producto");
+        tbcProducto.setCellValueFactory(new PropertyValueFactory<>("Producto"));
+
+        tbcProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
 
         TableColumn<ProductoDAO, String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<ProductoDAO, String>, TableCell<ProductoDAO, String>>() {

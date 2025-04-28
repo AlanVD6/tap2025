@@ -2,8 +2,10 @@ package vistas;
 
 import com.example.Componentes.ButtonCellProveedor;
 import com.example.modelos.ProveedorDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,14 +37,17 @@ public class ListaProveedor extends Stage {
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
         imv.setFitWidth(20);
         imv.setFitHeight(20);
-
         btnAgregar.setGraphic(imv);
 
-        tlbMenu = new ToolBar();
+        tlbMenu = new ToolBar(btnAgregar);
+
         CreateTable();
 
-        vBox = new VBox(tlbMenu, tbvProveedor);
-        escena = new Scene(vBox, 800, 600);
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
+        vBox.getChildren().addAll(tlbMenu, tbvProveedor);
+
+        escena = new Scene(vBox, 900, 650);
     }
 
     public void CreateTable(){
@@ -50,6 +55,8 @@ public class ListaProveedor extends Stage {
         ProveedorDAO objC = new ProveedorDAO();
 
         TableColumn<ProveedorDAO, String> tbcProveedor = new TableColumn<>("Proveedor");
+        tbcProveedor.setCellValueFactory(new PropertyValueFactory<>("Proveedor"));
+
         TableColumn<ProveedorDAO, String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<ProveedorDAO, String>, TableCell<ProveedorDAO, String>>() {
             @Override

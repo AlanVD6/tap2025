@@ -76,19 +76,18 @@ public class AdminView extends Stage {
         });
         grid.add(btnProveedor, 0, 1);
 
-        // Botón Insumos
+
         Button btnInsumos = crearBotonAdmin("Insumos", "/Image/insumos.png");
         btnInsumos.setOnAction(e -> {
-            // Aquí iría la lógica para abrir la vista de insumos
-            System.out.println("Abriendo gestión de insumos");
+            ListaInsumos listainsumos = new ListaInsumos();
+            listainsumos.show();
         });
         grid.add(btnInsumos, 1, 1);
 
-        // Botón Producto
         Button btnProducto = crearBotonAdmin("Producto", "/Image/producto.png");
         btnProducto.setOnAction(e -> {
-            // Aquí iría la lógica para abrir la vista de productos
-            System.out.println("Abriendo gestión de productos");
+            ListaProducto listaProducto = new ListaProducto();
+            listaProducto.show();
         });
         grid.add(btnProducto, 2, 1);
 

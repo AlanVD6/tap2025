@@ -4,6 +4,7 @@ import com.example.Componentes.ButtonCellInsumos;
 import com.example.Componentes.ButtonCellOrden;
 import com.example.modelos.InsumosDAO;
 import com.example.modelos.OrdenDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -38,14 +39,16 @@ public class ListaOrden extends Stage {
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
         imv.setFitWidth(20);
         imv.setFitHeight(20);
-
         btnAgregar.setGraphic(imv);
 
-        tlbMenu = new ToolBar();
+        tlbMenu = new ToolBar(btnAgregar);
+
         CreateTable();
 
-        vBox = new VBox(tlbMenu, tbvOrden);
-        escena = new Scene(vBox, 800, 600);
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(10));
+        vBox.getChildren().addAll(tlbMenu, tbvOrden);
+        escena = new Scene(vBox, 900, 650);
 
     }
 

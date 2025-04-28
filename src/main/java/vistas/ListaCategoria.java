@@ -4,10 +4,10 @@ import com.example.Componentes.ButtonCelCategoria;
 import com.example.modelos.CategoriaDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class ListaCategoria extends Stage {
 
@@ -31,15 +31,11 @@ public class ListaCategoria extends Stage {
         btnAgregar = new Button();
         btnAgregar.setOnAction(event -> new Categoria(tbvCategoria, null));
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
-        imv.setFitWidth(20);
-        imv.setFitHeight(20);
-
         btnAgregar.setGraphic(imv);
+        tlbMenu = new ToolBar(btnAgregar);
 
-        tlbMenu = new ToolBar();
         CreateTable();
-
-        vBox = new VBox(tlbMenu, tbvCategoria);
+        vBox = new VBox(tlbMenu,tbvCategoria);
         escena = new Scene(vBox, 800, 600);
     }
 
@@ -47,25 +43,17 @@ public class ListaCategoria extends Stage {
 
         CategoriaDAO objC = new CategoriaDAO();
 
-        TableColumn<CategoriaDAO, String> tbcCategoria = new TableColumn<>("Categoria");
+        TableColumn<CategoriaDAO, String> tbcCategoria = new TableColumn<>("Categoría");
+        tbcCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
         TableColumn<CategoriaDAO, String> tbcEditar = new TableColumn<>("Editar");
-        tbcEditar.setCellFactory(new Callback<TableColumn<CategoriaDAO, String>, TableCell<CategoriaDAO, String>>() {
-            @Override
-            public TableCell<CategoriaDAO, String> call(TableColumn<CategoriaDAO, String> param) {
-                return new ButtonCelCategoria("Editar");
-            }
-        });
+        tbcEditar.setCellFactory(param -> new ButtonCelCategoria("Editar"));
 
         TableColumn<CategoriaDAO, String> tbcEliminar = new TableColumn<>("Eliminar");
-        tbcEditar.setCellFactory(new Callback<TableColumn<CategoriaDAO, String>, TableCell<CategoriaDAO, String>>() {
-            @Override
-            public TableCell<CategoriaDAO, String> call(TableColumn<CategoriaDAO, String> param) {
-                return new ButtonCelCategoria("Eliminar");
-            }
-        });
+        tbcEliminar.setCellFactory(param -> new ButtonCelCategoria("Eliminar"));
 
         tbvCategoria.getColumns().addAll(tbcCategoria, tbcEditar, tbcEliminar);
+
         tbvCategoria.setItems(objC.SELECT());
     }
 }
