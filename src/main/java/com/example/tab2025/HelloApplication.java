@@ -28,7 +28,7 @@ public class HelloApplication extends Application {
         mitRompecabeza.setOnAction(actionEvent -> new Rompecabezas());
 
         mitRestaurante = new MenuItem("Restaurante");
-        mitRestaurante.setOnAction(actionEvent -> new Inicio());
+        mitRestaurante.setOnAction(actionEvent -> new Bienvenida());
 
 
         mitHilo = new MenuItem("Celayork");

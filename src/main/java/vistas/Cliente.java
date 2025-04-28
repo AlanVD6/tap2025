@@ -2,7 +2,10 @@ package vistas;
 
 import com.example.modelos.ClientesDAO;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -17,43 +20,69 @@ public class Cliente extends Stage {
     private ClientesDAO objC;
     private TableView<ClientesDAO> tbvClientes;
 
-    public Cliente(TableView<ClientesDAO> tbvCte, ClientesDAO obj){
+    public Cliente(TableView<ClientesDAO> tbvCte, ClientesDAO obj) {
         this.tbvClientes = tbvCte;
         CrearUI();
-        if( obj == null ){
+        if (obj == null) {
             objC = new ClientesDAO();
-        }else{
+        } else {
             objC = obj;
             txtNomCte.setText(objC.getNomCte());
             txtDireccion.setText(objC.getDireccion());
             txtEmail.setText(objC.getEmailCte());
             txtTelCte.setText(objC.getTelCte());
         }
-        //objC = obj == null ? new ClientesDAO() : obj;
         this.setTitle("Registrar Cliente");
         this.setScene(escena);
         this.show();
     }
-    private void CrearUI(){
+
+    private void CrearUI() {
+        Label lblNomCte = new Label("Nombre del Cliente:");
         txtNomCte = new TextField();
+
+        Label lblDireccion = new Label("Dirección:");
         txtDireccion = new TextField();
+
+        Label lblTelCte = new Label("Teléfono:");
         txtTelCte = new TextField();
+
+        Label lblEmail = new Label("Email:");
         txtEmail = new TextField();
+
         btnGuardar = new Button("Guardar");
+
         btnGuardar.setOnAction(event -> {
+            // Validar que no haya campos vacíos
+            if (txtNomCte.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
+                    txtTelCte.getText().isEmpty() || txtEmail.getText().isEmpty()) {
+
+                Alert alerta = new Alert(AlertType.WARNING);
+                alerta.setTitle("Campos Vacíos");
+                alerta.setHeaderText(null);
+                alerta.setContentText("Por favor, llena todos los campos antes de guardar.");
+                alerta.showAndWait();
+                return;
+            }
+
             objC.setNomCte(txtNomCte.getText());
             objC.setDireccion(txtDireccion.getText());
             objC.setTelCte(txtTelCte.getText());
             objC.setEmailCte(txtEmail.getText());
-            if( objC.getIdCte() > 0 )
+            if (objC.getIdCte() > 0)
                 objC.UPDATE();
             else
                 objC.INSERT();
-            tbvClientes.setItems(objC.SELECT());
-            tbvClientes.refresh();
+
+            if (tbvClientes != null) {
+                tbvClientes.setItems(objC.SELECT());
+                tbvClientes.refresh();
+            }
+            new Inicio();
             this.close();
         });
-        vBox = new VBox(txtNomCte,txtDireccion,txtTelCte,txtEmail,btnGuardar);
-        escena = new Scene(vBox,120,150);
+
+        vBox = new VBox(10, lblNomCte, txtNomCte, lblDireccion, txtDireccion, lblTelCte, txtTelCte, lblEmail, txtEmail, btnGuardar);
+        escena = new Scene(vBox, 400, 400);
     }
 }
