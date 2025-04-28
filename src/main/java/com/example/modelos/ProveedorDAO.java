@@ -79,7 +79,7 @@ public class ProveedorDAO {
                 objC = new ProveedorDAO();
 
                 objC.setIdProv(res.getInt("idProv"));
-                objC.setRazonSocial(res.getString("Razón Social"));
+                objC.setRazonSocial(res.getString("razonSocial"));
 
                 listaC.add(objC);
             }
