@@ -51,7 +51,8 @@ public class Producto extends Stage {
         txtProducto = new TextField();
         txtPrecio = new TextField();
 
-        btnGuardar = new Button();
+        btnGuardar = new Button("Guardar");
+        btnGuardar.setPrefWidth(100);
         btnGuardar.setOnAction(event -> {
 
             objC.setProducto(txtProducto.getText());
@@ -83,6 +84,7 @@ public class Producto extends Stage {
             tbvProducto.refresh();
             this.close();
         });
+        escena = new Scene(vBox, 400, 300);
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

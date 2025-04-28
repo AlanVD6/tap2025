@@ -26,7 +26,6 @@ public class Proveedor extends Stage {
             objC = obj;
             txtrazonSocial.setText(objC.getRazonSocial());
         }
-        //objC = obj == null ? new ClientesDAO() : obj;
         this.setTitle("Registrar Proovedor Por Razon Social");
         this.setScene(escena);
         this.show();
@@ -34,6 +33,7 @@ public class Proveedor extends Stage {
     private void CrearUI(){
         txtrazonSocial = new TextField();
         btnGuardar = new Button("Guardar");
+        btnGuardar.setPrefWidth(300);
         btnGuardar.setOnAction(event -> {
             objC.setRazonSocial(txtrazonSocial.getText());
             if( objC.getIdProv() > 0 )
@@ -45,6 +45,6 @@ public class Proveedor extends Stage {
             this.close();
         });
         vBox = new VBox(txtrazonSocial,btnGuardar);
-        escena = new Scene(vBox,120,150);
+        escena = new Scene(vBox,400,300);
     }
 }

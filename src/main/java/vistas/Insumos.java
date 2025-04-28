@@ -52,7 +52,8 @@ public class Insumos extends Stage {
         txtCosto = new TextField();
         txtCantidad = new TextField();
 
-        btnGuardar = new Button();
+        btnGuardar = new Button("Guardar");
+        btnGuardar.setPrefWidth(300);
         btnGuardar.setOnAction(event -> {
 
             objC.setInsumo(txtInsumo.getText());
@@ -102,7 +103,7 @@ public class Insumos extends Stage {
         });
 
         vBox = new VBox(txtInsumo, txtCosto, txtCantidad, btnGuardar);
-        escena = new Scene(vBox, 120, 150);
+        escena = new Scene(vBox, 400, 300);
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

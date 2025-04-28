@@ -58,7 +58,8 @@ public class Empleado extends Stage {
         txtUsuario = new TextField();
         txtContrasena = new TextField();
 
-        btnGuardar = new Button();
+        btnGuardar = new Button("Guardar");
+        btnGuardar.setPrefWidth(100);
         btnGuardar.setOnAction(event -> {
 
             objC.setNombre(txtNombre.getText());
@@ -91,7 +92,7 @@ public class Empleado extends Stage {
         });
 
         vBox = new VBox(txtNombre, txtNacimiento, txtCURP, txtTelefono, txtSueldo, txtUsuario, txtContrasena, btnGuardar);
-        escena = new Scene(vBox, 120, 150);
+        escena = new Scene(vBox, 400, 300);
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

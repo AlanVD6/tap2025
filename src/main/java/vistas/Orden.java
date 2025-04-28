@@ -53,7 +53,8 @@ public class Orden extends Stage {
         txtFecha = new TextField();
         txtHora = new TextField();
 
-        btnGuardar = new Button();
+        btnGuardar = new Button("Guardar");
+        btnGuardar.setPrefWidth(300);
         btnGuardar.setOnAction(event -> {
 
             try {
@@ -91,7 +92,7 @@ public class Orden extends Stage {
         });
 
         vBox = new VBox(txtNoOrden, txtFecha, txtHora, btnGuardar);
-        escena = new Scene(vBox, 120, 150);
+        escena = new Scene(vBox, 400, 300);
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

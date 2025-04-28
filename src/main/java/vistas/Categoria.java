@@ -34,10 +34,11 @@ public class Categoria extends Stage {  // Heredar de Stage para usar métodos c
     }
 
     private void CrearUI() {
-        // Implementación para crear la interfaz de usuario
+
         vBox = new VBox();
         txtCategoria = new TextField();
         btnGuardar = new Button("Guardar");
+        btnGuardar.setPrefWidth(300);
         btnGuardar.setOnAction(event -> {
 
             objC.setCategoria(txtCategoria.getText());
@@ -57,6 +58,6 @@ public class Categoria extends Stage {  // Heredar de Stage para usar métodos c
         });
 
         vBox.getChildren().addAll(txtCategoria, btnGuardar);
-        escena = new Scene(vBox, 120, 150);
+        escena = new Scene(vBox, 400, 300);
     }
 }
