@@ -58,7 +58,9 @@ public class ListaProducto extends Stage {
         TableColumn<ProductoDAO, String> tbcProducto = new TableColumn<>("Producto");
         tbcProducto.setCellValueFactory(new PropertyValueFactory<>("Producto"));
 
-        tbcProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
+        TableColumn<ProductoDAO, String> tbcPrecio = new TableColumn<>("Precio");
+
+        TableColumn<ProductoDAO, String> tbcCosto = new TableColumn<>("Costo");
 
         TableColumn<ProductoDAO, String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<ProductoDAO, String>, TableCell<ProductoDAO, String>>() {
@@ -76,7 +78,7 @@ public class ListaProducto extends Stage {
             }
         });
 
-        tbvProducto.getColumns().addAll(tbcProducto, tbcEditar, tbcEliminar);
+        tbvProducto.getColumns().addAll(tbcProducto, tbcPrecio, tbcCosto, tbcEditar, tbcEliminar);
         tbvProducto.setItems(objC.SELECT());
     }
 }

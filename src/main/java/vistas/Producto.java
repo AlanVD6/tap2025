@@ -14,7 +14,7 @@ public class Producto extends Stage {
 
     private Button btnGuardar;
 
-    private TextField txtProducto, txtPrecio;
+    private TextField txtProducto, txtPrecio, txtCosto;
 
     private VBox vBox;
     private ProductoDAO objC;
@@ -36,10 +36,11 @@ public class Producto extends Stage {
 
             txtProducto.setText(objC.getProducto());
             txtPrecio.setText(String.valueOf(objC.getPrecio()));
+            txtCosto.setText(String.valueOf(objC.getCosto()));
 
         }
 
-        this.setTitle("Ingresar Insumos");
+        this.setTitle("Ingresar Productos");
         this.setScene(escena);
         this.show();
     }
@@ -60,11 +61,27 @@ public class Producto extends Stage {
                 float precio = Float.parseFloat(txtPrecio.getText());
                 if (precio < 0) {
 
-                    mostrarAlerta("Error de formato", "El costo de los insumos no puede ser menor a 0.");
+                    mostrarAlerta("Error de formato", "El precio de los productos no puede ser menor a 0.");
                     return;
                 } else {
 
                     objC.setPrecio(precio);
+                }
+
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Error de formato", "El precio debe ser un número decimal válido.");
+                return;
+            }
+
+            try {
+                float costo = Float.parseFloat(txtCosto.getText());
+                if (costo < 0) {
+
+                    mostrarAlerta("Error de formato", "El costo de los productos no puede ser menor a 0.");
+                    return;
+                } else {
+
+                    objC.setCosto(costo);
                 }
 
             } catch (NumberFormatException e) {

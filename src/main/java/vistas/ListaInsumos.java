@@ -57,9 +57,6 @@ public class ListaInsumos extends Stage {
         TableColumn<InsumosDAO, String> tbcInsumo = new TableColumn<>("Insumo");
         tbcInsumo.setCellValueFactory(new PropertyValueFactory<>("insumo"));
 
-        TableColumn<InsumosDAO, Float> tbcCosto = new TableColumn<>("Costo");
-        tbcCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
-
         TableColumn<InsumosDAO, Float> tbcCantidad = new TableColumn<>("Cantidad");
         tbcCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 
@@ -79,7 +76,7 @@ public class ListaInsumos extends Stage {
             }
         });
 
-        tbvInsumos.getColumns().addAll(tbcInsumo, tbcCosto, tbcCantidad, tbcEditar, tbcEliminar);
+        tbvInsumos.getColumns().addAll(tbcInsumo, tbcCantidad, tbcEditar, tbcEliminar);
         tbvInsumos.setItems(objC.SELECT());
     }
 }

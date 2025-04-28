@@ -10,7 +10,7 @@ public class ProductoDAO {
 
     private int idProd;
     private String producto;
-    private float precio;
+    private float precio, costo;
 
     public int getIdProd() { return idProd; }
     public void setIdProd( int idProd) { this.idProd = idProd; }
@@ -21,9 +21,12 @@ public class ProductoDAO {
     public float getPrecio() { return precio; }
     public void setPrecio( float precio) { this.precio = precio; }
 
+    public float getCosto() { return costo; }
+    public void setCosto( float costo) { this.costo = costo; }
+
     public void INSERT() {
 
-        String query = "INSERT INTO producto (producto, precio) VALUES ('" + producto + "', '" + precio + "')";
+        String query = "INSERT INTO producto (producto, precio) VALUES ('" + producto + "', '" + precio + "', '" + costo + "')";
 
         try{
 
@@ -38,7 +41,7 @@ public class ProductoDAO {
 
     public void UPDATE() {
 
-        String query = "UPDATE producto SET producto = '" + producto + "', precio = '" + precio + "' WHERE idProd = " + idProd;
+        String query = "UPDATE producto SET producto = '" + producto + "', precio = '" + precio + "', costo = '" + costo + "' WHERE idProd = " + idProd;
 
         try{
 
@@ -85,6 +88,7 @@ public class ProductoDAO {
                 objC.setIdProd(res.getInt("idProd"));
                 objC.setProducto(res.getString("Producto"));
                 objC.setPrecio(res.getFloat("Precio"));
+                objC.setCosto(res.getFloat("Costo"));
 
                 listaC.add(objC);
             }

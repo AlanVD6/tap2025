@@ -10,7 +10,6 @@ public class InsumosDAO {
 
     private int idIns;
     private String insumo;
-    private float costo;
     private float cantidad;
     private int idProv;
 
@@ -20,9 +19,6 @@ public class InsumosDAO {
     public String getInsumo() { return insumo; }
     public void setInsumo(String insumo) { this.insumo = insumo; }
 
-    public float getCosto() { return costo; }
-    public void setCosto(float costo) { this.costo = costo; }
-
     public float getCantidad() { return cantidad; }
     public void setCantidad(float cantidad) { this.cantidad = cantidad; }
 
@@ -31,7 +27,7 @@ public class InsumosDAO {
 
     public void INSERT() {
 
-        String query = "INSERT INTO insumos (insumo, costo, cantidad, idProv) VALUES ('" + insumo+ "', '" + costo+ "', '" + cantidad + "', '" + idProv + "')";
+        String query = "INSERT INTO insumos (insumo,  cantidad, idProv) VALUES ('" + insumo+ "', '" + cantidad + "', '" + idProv + "')";
 
         try{
 
@@ -46,7 +42,7 @@ public class InsumosDAO {
 
     public void UPDATE() {
 
-        String query = "UPDATE insumos SET insumo = '" + insumo + "', costo = '" + costo + "', cantidad = '" + cantidad + "', idProv = '" + idProv + "' WHERE idIns = " + idIns;
+        String query = "UPDATE insumos SET insumo = '" + insumo + "', cantidad = '" + cantidad + "', idProv = '" + idProv + "' WHERE idIns = " + idIns;
 
         try{
 
@@ -92,7 +88,6 @@ public class InsumosDAO {
 
                 objC.setIdIns(res.getInt("idIns"));
                 objC.setInsumo(res.getString("Insumo"));
-                objC.setCosto(res.getFloat("Costo"));
                 objC.setCantidad(res.getFloat("Cantidad"));
                 objC.setIdProv(res.getInt("idProv"));
 
