@@ -37,6 +37,7 @@ public class AdminView extends Stage {
 
         topBar.getChildren().addAll(title, spacer, btnSalir);
         root.setTop(topBar);
+
         // Contenido central con botones
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -44,7 +45,7 @@ public class AdminView extends Stage {
         grid.setVgap(30);
         grid.setPadding(new Insets(40));
 
-        // Botón Empleados
+        // Botones existentes
         Button btnEmpleados = crearBotonAdmin("Empleados", "/Image/empleados.png");
         btnEmpleados.setOnAction(e -> {
             ListaEmpleado listaempleado = new ListaEmpleado();
@@ -52,7 +53,6 @@ public class AdminView extends Stage {
         });
         grid.add(btnEmpleados, 0, 0);
 
-        // Botón Categoría
         Button btnCategoria = crearBotonAdmin("Categoría", "/Image/categoria.png");
         btnCategoria.setOnAction(e -> {
             ListaCategoria listacategoria = new ListaCategoria();
@@ -60,22 +60,19 @@ public class AdminView extends Stage {
         });
         grid.add(btnCategoria, 1, 0);
 
-        // Botón Ventas
         Button btnVentas = crearBotonAdmin("Ventas", "/Image/ventas.png");
         btnVentas.setOnAction(e -> {
-            // Aquí iría la lógica para abrir la vista de ventas
+            // Lógica de ventas
             System.out.println("Abriendo reporte de ventas");
         });
         grid.add(btnVentas, 2, 0);
 
-        // Botón Proveedor
         Button btnProveedor = crearBotonAdmin("Proveedor", "/Image/proveedor.png");
         btnProveedor.setOnAction(e -> {
             ListaProveedor listaproveedor = new ListaProveedor();
             listaproveedor.show();
         });
         grid.add(btnProveedor, 0, 1);
-
 
         Button btnInsumos = crearBotonAdmin("Insumos", "/Image/insumos.png");
         btnInsumos.setOnAction(e -> {
@@ -90,6 +87,28 @@ public class AdminView extends Stage {
             listaProducto.show();
         });
         grid.add(btnProducto, 2, 1);
+
+
+        Button btnClientes = crearBotonAdmin("Clientes", "/Image/clientes.png");
+        btnClientes.setOnAction(e -> {
+            ListaClientes listaClientes = new ListaClientes();
+            listaClientes.show();
+        });
+        grid.add(btnClientes, 0, 2);
+
+        Button btnMesas = crearBotonAdmin("Mesas", "/Image/mesa.png");
+        btnMesas.setOnAction(e -> {
+            ListaMesas listamesas = new ListaMesas();
+            listamesas.show();
+        });
+        grid.add(btnMesas, 1, 2);
+
+        Button btnReservaciones = crearBotonAdmin("Reservaciones", "/Image/reservar.png");
+        btnReservaciones.setOnAction(e -> {
+            ListaReservacion listaReservacion = new ListaReservacion();
+            listaReservacion.show();
+        });
+        grid.add(btnReservaciones, 2, 2);
 
         root.setCenter(grid);
 
