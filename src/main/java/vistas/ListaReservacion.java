@@ -4,6 +4,7 @@ import com.example.Componentes.ButtonCellReservacion;
 import com.example.modelos.ReservacionDAO;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -49,7 +50,16 @@ public class ListaReservacion extends Stage {
 
         ReservacionDAO objC = new ReservacionDAO();
 
-        TableColumn<ReservacionDAO, String> tbcReservacion = new TableColumn<>("Insumos");
+        TableColumn<ReservacionDAO, String> tbcNombreCte = new TableColumn<>("Nombre");
+        tbcNombreCte.setCellValueFactory(new PropertyValueFactory<>("nomCte"));
+        TableColumn<ReservacionDAO, String> tbcFecha = new TableColumn<>("Fecha");
+        tbcFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        TableColumn<ReservacionDAO, String> tbcHora = new TableColumn<>("Hora");
+        tbcHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
+        TableColumn<ReservacionDAO, String> tbcPersonas = new TableColumn<>("Personas");
+        tbcPersonas.setCellValueFactory(new PropertyValueFactory<>("personas"));
+        TableColumn<ReservacionDAO, String> tbcTelefono = new TableColumn<>("Telefono");
+        tbcTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
 
         TableColumn<ReservacionDAO, String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<ReservacionDAO, String>, TableCell<ReservacionDAO, String>>() {
@@ -67,7 +77,7 @@ public class ListaReservacion extends Stage {
             }
         });
 
-        tbvReservacion.getColumns().addAll(tbcReservacion, tbcEditar, tbcEliminar);
+        tbvReservacion.getColumns().addAll(tbcNombreCte, tbcFecha, tbcHora, tbcPersonas, tbcTelefono, tbcEditar, tbcEliminar);
         tbvReservacion.setItems(objC.SELECT());
     }
 }

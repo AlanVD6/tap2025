@@ -71,7 +71,7 @@ public class ReservacionDAO {
 
     public void DELETE() {
 
-        String query = "DELETE FROM reservacion WHERE idProd = " + idReserva;
+        String query = "DELETE FROM reservacion WHERE idReserva = " + idReserva;
 
         try{
 
@@ -102,11 +102,11 @@ public class ReservacionDAO {
 
                 objC.setIdReserva(res.getInt("idReserva"));
                 objC.setIdCte(res.getInt("idCte"));
-                objC.setNomCte(res.getString("Nombre"));
-                objC.setFecha(res.getString("Fecha"));
-                objC.setHora(res.getString("Hora"));
-                objC.setPersonas(res.getInt("No. Personas"));
-                objC.setTelefono((res.getString("Teléfono")));
+                objC.setNomCte(res.getString("nomCte"));
+                objC.setFecha(res.getString("fecha"));
+                objC.setHora(res.getString("hora"));
+                objC.setPersonas(res.getInt("personas"));
+                objC.setTelefono((res.getString("telefono")));
 
                 listaC.add(objC);
             }

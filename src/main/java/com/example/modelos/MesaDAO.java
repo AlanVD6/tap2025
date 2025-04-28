@@ -42,7 +42,7 @@ public class MesaDAO {
 
     public void UPDATE() {
 
-        String query = "UPDATE mesa SET numero = '" + numero + "', capacidad = '" + capacidad + "', estado = '" + estado + "' WHERE id = " + idMesa;
+        String query = "UPDATE mesa SET numero = '" + numero + "', capacidad = '" + capacidad + "', estado = '" + estado + "' WHERE idMesa = " + idMesa;
 
         try{
 
@@ -87,9 +87,9 @@ public class MesaDAO {
                 objC = new MesaDAO();
 
                 objC.setIdMesa(res.getInt("idMesa"));
-                objC.setNumero(res.getInt("Número"));
-                objC.setCapacidad(res.getInt("Capacidad"));
-                objC.setEstado(res.getString("Estado"));
+                objC.setNumero(res.getInt("numero"));
+                objC.setCapacidad(res.getInt("capacidad"));
+                objC.setEstado(res.getString("estado"));
 
                 listaC.add(objC);
             }
