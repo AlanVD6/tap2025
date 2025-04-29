@@ -38,13 +38,16 @@ public class CategoriaDAO {
 
         String query = "UPDATE categoria SET categoria = '" + categoria + "' WHERE idCat = " + idCat;
 
-        try{
+        try {
 
             Statement stmt = Conexion.connection.createStatement();
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
 
-        }catch(Exception e) {
-
+            if (generatedKeys.next()) {
+                this.idCat = generatedKeys.getInt(1);
+            }
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }

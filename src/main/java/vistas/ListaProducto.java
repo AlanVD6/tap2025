@@ -1,8 +1,6 @@
 package vistas;
 
-import com.example.Componentes.ButtonCellInsumos;
 import com.example.Componentes.ButtonCellProducto;
-import com.example.modelos.InsumosDAO;
 import com.example.modelos.ProductoDAO;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -56,11 +54,16 @@ public class ListaProducto extends Stage {
         ProductoDAO objC = new ProductoDAO();
 
         TableColumn<ProductoDAO, String> tbcProducto = new TableColumn<>("Producto");
-        tbcProducto.setCellValueFactory(new PropertyValueFactory<>("Producto"));
+        tbcProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
 
         TableColumn<ProductoDAO, String> tbcPrecio = new TableColumn<>("Precio");
+        tbcPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
 
         TableColumn<ProductoDAO, String> tbcCosto = new TableColumn<>("Costo");
+        tbcCosto.setCellValueFactory(new PropertyValueFactory<>("costo"));
+
+        TableColumn<ProductoDAO, String> tbcIdCat = new TableColumn<>("idCat");
+        tbcIdCat.setCellValueFactory(new PropertyValueFactory<>("idCat"));
 
         TableColumn<ProductoDAO, String> tbcEditar = new TableColumn<>("Editar");
         tbcEditar.setCellFactory(new Callback<TableColumn<ProductoDAO, String>, TableCell<ProductoDAO, String>>() {
@@ -78,7 +81,7 @@ public class ListaProducto extends Stage {
             }
         });
 
-        tbvProducto.getColumns().addAll(tbcProducto, tbcPrecio, tbcCosto, tbcEditar, tbcEliminar);
+        tbvProducto.getColumns().addAll(tbcProducto, tbcPrecio, tbcCosto, tbcIdCat, tbcEditar, tbcEliminar);
         tbvProducto.setItems(objC.SELECT());
     }
 }
