@@ -164,10 +164,9 @@ public class MesaView {
         Text capacidad = createCapacityText(mesa);
 
         Button btnSeleccionar = createSelectButton(mesa);
-        Button btnReservar = createReserveButton(mesa);
         Button btnRegresar = createBackButton();
 
-        detalle.getChildren().addAll(img, numero, capacidad, btnSeleccionar, btnReservar, btnRegresar);
+        detalle.getChildren().addAll(img, numero, capacidad, btnSeleccionar , btnRegresar);
         root.setCenter(detalle);
     }
 
@@ -201,15 +200,6 @@ public class MesaView {
         return btnSeleccionar;
     }
 
-    private Button createReserveButton(Mesa mesa) {
-        Button btnReservar = new Button("Reservar Mesa");
-        btnReservar.getStyleClass().add("reserve-button");
-        btnReservar.setOnAction(e -> {
-            updateMesaStatus(mesa, "reservada");
-            refreshView();
-        });
-        return btnReservar;
-    }
 
     private void updateMesaStatus(Mesa mesa, String estado) {
         MesaDAO mesaDAO = new MesaDAO();
