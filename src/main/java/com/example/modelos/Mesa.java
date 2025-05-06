@@ -2,7 +2,7 @@ package com.example.modelos;
 
 public class Mesa {
     private int numero;
-    private int capacidad;  // Nuevo campo
+    private int capacidad;
     private boolean ocupada;
     private boolean reservada;
 
