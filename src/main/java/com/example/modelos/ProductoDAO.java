@@ -8,9 +8,9 @@ import java.sql.Statement;
 
 public class ProductoDAO {
 
-    private int idProd, idCat;
+    private int idProd;
     private String producto;
-    private float precio, costo;
+    private float precio;
 
     public int getIdProd() { return idProd; }
     public void setIdProd( int idProd) { this.idProd = idProd; }
@@ -21,15 +21,9 @@ public class ProductoDAO {
     public float getPrecio() { return precio; }
     public void setPrecio( float precio) { this.precio = precio; }
 
-    public float getCosto() { return costo; }
-    public void setCosto( float costo) { this.costo = costo; }
-
-    public int getIdCat() { return idCat; }
-    public void setIdCat(int idCat) { this.idCat = idCat; }
-
     public void INSERT() {
 
-        String query = "INSERT INTO producto (producto, precio, costo, idCat) VALUES ('" + producto + "', '" + precio + "', '" + costo + "', '" + idCat + "')";
+        String query = "INSERT INTO producto (producto, precio) VALUES ('" + producto + "', '" + precio + "')";
 
         try{
 
@@ -44,7 +38,7 @@ public class ProductoDAO {
 
     public void UPDATE() {
 
-        String query = "UPDATE producto SET producto = '" + producto + "', precio = '" + precio + "', costo = '" + costo + "', idCat = '" + idCat + "' WHERE idProd = " + idProd;
+        String query = "UPDATE producto SET producto = '" + producto + "', precio = '" + precio + "' WHERE idProd = " + idProd;
 
         try{
 
@@ -91,8 +85,6 @@ public class ProductoDAO {
                 objC.setIdProd(res.getInt("idProd"));
                 objC.setProducto(res.getString("Producto"));
                 objC.setPrecio(res.getFloat("Precio"));
-                objC.setCosto(res.getFloat("Costo"));
-                objC.setIdProd(res.getInt("idCat"));
 
                 listaC.add(objC);
             }

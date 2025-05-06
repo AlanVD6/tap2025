@@ -13,7 +13,7 @@ public class Insumos extends Stage {
 
     private Button btnGuardar;
 
-    private TextField txtInsumo, txtCantidad;
+    private TextField txtInsumo, txtCosto, txtCantidad;
 
     private VBox vBox;
     private InsumosDAO objC;
@@ -34,6 +34,7 @@ public class Insumos extends Stage {
             objC = obj;
 
             txtInsumo.setText(objC.getInsumo());
+            txtCosto.setText(String.valueOf(objC.getCosto()));
             txtCantidad.setText(String.valueOf(objC.getCantidad()));
 
         }
@@ -48,6 +49,7 @@ public class Insumos extends Stage {
         vBox = new VBox();
 
         txtInsumo = new TextField();
+        txtCosto = new TextField();
         txtCantidad = new TextField();
 
         btnGuardar = new Button("Guardar");
@@ -55,7 +57,21 @@ public class Insumos extends Stage {
         btnGuardar.setOnAction(event -> {
 
             objC.setInsumo(txtInsumo.getText());
+            try {
+                float costo = Float.parseFloat(txtCosto.getText());
+                if (costo < 0) {
 
+                    mostrarAlerta("Error de formato", "El costo de los insumos no puede ser menor a 0.");
+                    return;
+                } else {
+
+                    objC.setCosto(costo);
+                }
+
+            } catch (NumberFormatException e) {
+                    mostrarAlerta("Error de formato", "El costo debe ser un número decimal válido.");
+                    return;
+            }
             try {
                 int cantidad = Integer.parseInt(txtCantidad.getText());
                 if (cantidad < 0) {
@@ -69,7 +85,7 @@ public class Insumos extends Stage {
 
             } catch (NumberFormatException e) {
 
-                mostrarAlerta("Error de formato", "La cantidad debe ser un número entero válido.");
+                mostrarAlerta("Error de formato", "El sueldo debe ser un número entero válido.");
                 return;
             }
 
@@ -86,7 +102,7 @@ public class Insumos extends Stage {
             this.close();
         });
 
-        vBox = new VBox(txtInsumo, txtCantidad, btnGuardar);
+        vBox = new VBox(txtInsumo, txtCosto, txtCantidad, btnGuardar);
         escena = new Scene(vBox, 400, 300);
     }
 

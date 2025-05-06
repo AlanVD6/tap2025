@@ -9,40 +9,50 @@ import javafx.scene.control.TableCell;
 import java.util.Optional;
 
 public class ButtonCellMesas extends TableCell<MesaDAO, String> {
+    private final Button button;
 
-    private Button btnCelda;
-    private String strLabelBtn;
+    public ButtonCellMesas(String buttonType) {
+        this.button = new Button(buttonType);
+        configureButtonStyle();
 
-    public ButtonCellMesas(String label) {
-        strLabelBtn = label;
-        btnCelda = new Button(strLabelBtn);
-        btnCelda.setOnAction(event -> {
-            MesaDAO objM = this.getTableView().getItems().get(this.getIndex());
+        this.button.setOnAction(event -> handleButtonAction());
+    }
 
-            if (strLabelBtn.equals("Editar")) {
-                objM.setEstado(objM.getEstado().equals("Disponible") ? "Ocupada" : "Disponible");
-                objM.UPDATE();
-            } else { // Eliminar
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Mensaje del Sistema :)");
-                alert.setContentText("¿Deseas eliminar la mesa seleccionada?");
-                Optional<ButtonType> opcion = alert.showAndWait();
+    private void configureButtonStyle() {
+        button.setStyle("-fx-font-size: 12px; -fx-padding: 5px 10px; " +
+                "-fx-background-color: #e74c3c; -fx-text-fill: white;");
 
-                if (opcion.get() == ButtonType.OK) {
-                    objM.DELETE();
-                }
-            }
+        button.setOnMouseEntered(e ->
+                button.setStyle("-fx-font-size: 12px; -fx-padding: 5px 10px; " +
+                        "-fx-background-color: #c0392b; -fx-text-fill: white;"));
 
-            this.getTableView().setItems(objM.SELECT());
-            this.getTableView().refresh();
-        });
+        button.setOnMouseExited(e ->
+                button.setStyle("-fx-font-size: 12px; -fx-padding: 5px 10px; " +
+                        "-fx-background-color: #e74c3c; -fx-text-fill: white;"));
+    }
+
+    private void handleButtonAction() {
+        MesaDAO mesa = getTableView().getItems().get(getIndex());
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar eliminación");
+        alert.setHeaderText("Eliminar mesa " + mesa.getNumero());
+        alert.setContentText("¿Está seguro de que desea eliminar esta mesa?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            mesa.DELETE();
+            getTableView().setItems(mesa.SELECT());
+        }
     }
 
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-        if (!empty)
-            this.setGraphic(btnCelda);
+        if (empty) {
+            setGraphic(null);
+        } else {
+            setGraphic(button);
+        }
     }
 }
-
