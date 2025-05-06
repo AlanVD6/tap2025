@@ -1,12 +1,8 @@
 package vistas;
 
-import com.example.modelos.InsumosDAO;
 import com.example.modelos.ProductoDAO;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -14,7 +10,7 @@ public class Producto extends Stage {
 
     private Button btnGuardar;
 
-    private TextField txtProducto, txtPrecio;
+    private TextField txtProducto, txtPrecio, txtCosto, txtIdCat;
 
     private VBox vBox;
     private ProductoDAO objC;
@@ -36,10 +32,12 @@ public class Producto extends Stage {
 
             txtProducto.setText(objC.getProducto());
             txtPrecio.setText(String.valueOf(objC.getPrecio()));
+            txtCosto.setText(String.valueOf(objC.getCosto()));
+            txtIdCat.setText(String.valueOf(objC.getIdCat()));
 
         }
 
-        this.setTitle("Ingresar Insumos");
+        this.setTitle("Ingresar Productos");
         this.setScene(escena);
         this.show();
     }
@@ -48,8 +46,17 @@ public class Producto extends Stage {
 
         vBox = new VBox();
 
+        Label lblProducto = new Label("Producto");
         txtProducto = new TextField();
+
+        Label lblPrecio = new Label("Precio");
         txtPrecio = new TextField();
+
+        Label lblCosto = new Label("Costo");
+        txtCosto = new TextField();
+
+        Label lblCat = new Label("ID Categoria");
+        txtIdCat = new TextField();
 
         btnGuardar = new Button("Guardar");
         btnGuardar.setPrefWidth(100);
@@ -60,7 +67,7 @@ public class Producto extends Stage {
                 float precio = Float.parseFloat(txtPrecio.getText());
                 if (precio < 0) {
 
-                    mostrarAlerta("Error de formato", "El costo de los insumos no puede ser menor a 0.");
+                    mostrarAlerta("Error de formato", "El precio de los productos no puede ser menor a 0.");
                     return;
                 } else {
 
@@ -68,7 +75,39 @@ public class Producto extends Stage {
                 }
 
             } catch (NumberFormatException e) {
+                mostrarAlerta("Error de formato", "El precio debe ser un número decimal válido.");
+                return;
+            }
+
+            try {
+                float costo = Float.parseFloat(txtCosto.getText());
+                if (costo < 0) {
+
+                    mostrarAlerta("Error de formato", "El costo de los productos no puede ser menor a 0.");
+                    return;
+                } else {
+
+                    objC.setCosto(costo);
+                }
+
+            } catch (NumberFormatException e) {
                 mostrarAlerta("Error de formato", "El costo debe ser un número decimal válido.");
+                return;
+            }
+
+            try {
+                int idCat = Integer.parseInt(txtIdCat.getText());
+                if (idCat < 1) {
+
+                    mostrarAlerta("Error de registro", "No existen registros negativos.");
+                    return;
+                } else {
+
+                    objC.setIdCat(idCat);
+                }
+
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Error de formato", "El ID debe ser un número entero válido.");
                 return;
             }
 
@@ -84,6 +123,8 @@ public class Producto extends Stage {
             tbvProducto.refresh();
             this.close();
         });
+
+        vBox = new VBox(lblProducto, txtProducto, lblPrecio, txtPrecio, lblCosto, txtCosto, lblCat, txtIdCat, btnGuardar);
         escena = new Scene(vBox, 400, 300);
     }
 
