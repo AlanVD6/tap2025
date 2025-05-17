@@ -3,11 +3,9 @@ package vistas;
 import com.example.modelos.InsumosDAO;
 import com.example.modelos.OrdenDAO;
 import com.google.protobuf.ValueOrBuilder;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -47,14 +45,21 @@ public class Orden extends Stage {
 
     public void CrearUI(){
 
-        vBox = new VBox();
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(15));
 
+        Label lblNoOrden = new Label("Número de Orden:");
         txtNoOrden = new TextField();
+
+        Label lblFecha = new Label("Fecha:");
         txtFecha = new TextField();
+
+        Label lblHora = new Label("Hora:");
         txtHora = new TextField();
 
+
         btnGuardar = new Button("Guardar");
-        btnGuardar.setPrefWidth(300);
+        btnGuardar.setPrefWidth(200);
         btnGuardar.setOnAction(event -> {
 
             try {
@@ -91,8 +96,13 @@ public class Orden extends Stage {
 
         });
 
-        vBox = new VBox(txtNoOrden, txtFecha, txtHora, btnGuardar);
-        escena = new Scene(vBox, 400, 300);
+        vBox.getChildren().addAll(
+                lblNoOrden, txtNoOrden,
+                lblFecha, txtFecha,
+                lblHora, txtHora,
+                btnGuardar
+        );
+        escena = new Scene(vBox, 400, 250);
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

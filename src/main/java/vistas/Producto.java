@@ -1,6 +1,7 @@
 package vistas;
 
 import com.example.modelos.ProductoDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -44,7 +45,9 @@ public class Producto extends Stage {
 
     public void CrearUI(){
 
-        vBox = new VBox();
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(15));
+
 
         Label lblProducto = new Label("Producto");
         txtProducto = new TextField();
@@ -59,7 +62,7 @@ public class Producto extends Stage {
         txtIdCat = new TextField();
 
         btnGuardar = new Button("Guardar");
-        btnGuardar.setPrefWidth(100);
+        btnGuardar.setPrefWidth(200);
         btnGuardar.setOnAction(event -> {
 
             objC.setProducto(txtProducto.getText());
@@ -124,8 +127,12 @@ public class Producto extends Stage {
             this.close();
         });
 
-        vBox = new VBox(lblProducto, txtProducto, lblPrecio, txtPrecio, lblCosto, txtCosto, lblCat, txtIdCat, btnGuardar);
-        escena = new Scene(vBox, 400, 300);
+        vBox.getChildren().addAll(
+                lblProducto, txtProducto,
+                lblPrecio, txtPrecio,
+                lblCosto, txtCosto,
+                btnGuardar);
+        escena = new Scene(vBox, 400, 250);
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

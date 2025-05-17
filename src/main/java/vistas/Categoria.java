@@ -1,8 +1,10 @@
 package vistas;
 
 import com.example.modelos.CategoriaDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -35,10 +37,12 @@ public class Categoria extends Stage {  // Heredar de Stage para usar métodos c
 
     private void CrearUI() {
 
-        vBox = new VBox();
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(15));
+        Label lblCategoria = new Label("Categoria");
         txtCategoria = new TextField();
         btnGuardar = new Button("Guardar");
-        btnGuardar.setPrefWidth(300);
+        btnGuardar.setPrefWidth(200);
         btnGuardar.setOnAction(event -> {
 
             objC.setCategoria(txtCategoria.getText());
@@ -57,7 +61,7 @@ public class Categoria extends Stage {  // Heredar de Stage para usar métodos c
             this.close();
         });
 
-        vBox.getChildren().addAll(txtCategoria, btnGuardar);
-        escena = new Scene(vBox, 400, 300);
+        vBox.getChildren().addAll(lblCategoria, txtCategoria, btnGuardar);
+        escena = new Scene(vBox, 300, 150);
     }
 }

@@ -1,11 +1,9 @@
 package vistas;
 
 import com.example.modelos.InsumosDAO;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -45,13 +43,16 @@ public class Insumos extends Stage {
 
     public void CrearUI(){
 
-        vBox = new VBox();
+        vBox = new VBox(10);
+        vBox.setPadding(new Insets(15));
 
+        Label lblInsumo = new Label("Nombre del Insumo:");
         txtInsumo = new TextField();
+        Label lblCantidad = new Label("Cantidad:");
         txtCantidad = new TextField();
 
         btnGuardar = new Button("Guardar");
-        btnGuardar.setPrefWidth(300);
+        btnGuardar.setPrefWidth(200);
         btnGuardar.setOnAction(event -> {
 
             objC.setInsumo(txtInsumo.getText());
@@ -86,8 +87,8 @@ public class Insumos extends Stage {
             this.close();
         });
 
-        vBox = new VBox(txtInsumo, txtCantidad, btnGuardar);
-        escena = new Scene(vBox, 400, 300);
+        vBox.getChildren().addAll(lblInsumo, txtInsumo, lblCantidad, txtCantidad, btnGuardar);
+        escena = new Scene(vBox, 400, 200);
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
