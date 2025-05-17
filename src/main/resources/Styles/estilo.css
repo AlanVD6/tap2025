@@ -11,6 +11,13 @@
     -fx-background-color: #f9f9f9;
 }
 
+.background-with-image {
+    -fx-background-image: url('/Image/restaurante-fondo.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
 /*++++++++++++++++++++++++++++++++++++++*/
 /*+  BARRA SUPERIOR (MENÚ PRINCIPAL)   +*/
 /*++++++++++++++++++++++++++++++++++++++*/
@@ -166,6 +173,24 @@
     -fx-cursor: default;
 }
 
+/* Estados específicos para mesas */
+.mesa-disponible {
+    -fx-background-color: #e8f5e9;
+    -fx-border-color: #2ecc71;
+}
+
+.mesa-reservada {
+    -fx-background-color: #fff3e0;
+    -fx-border-color: #f39c12;
+    -fx-opacity: 0.8;
+}
+
+.mesa-ocupada {
+    -fx-background-color: #ffebee;
+    -fx-border-color: #e74c3c;
+    -fx-opacity: 0.8;
+}
+
 .item-image {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
 }
@@ -179,146 +204,115 @@
 .item-description {
     -fx-font-size: 14px;
     -fx-fill: #7f8c8d;
-    -fx-wrap-text: true;
     -fx-text-alignment: center;
-    -fx-max-width: 300px;
+}
+
+.item-detail {
+    -fx-font-size: 14px;
+    -fx-fill: #34495e;
 }
 
 .item-price {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-fill: #e74c3c;
-}
-
-.occupied-text {
-    -fx-fill: #e74c3c;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-}
-
-/*++++++++++++++++++++++++++++++++++++++*/
-/*+  CONTROLES DE CANTIDAD            +*/
-/*++++++++++++++++++++++++++++++++++++++*/
-.quantity-controls {
-    -fx-spacing: 10px;
-    -fx-alignment: center;
+    -fx-fill: #e67e22;
 }
 
 .quantity-text {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
+    -fx-fill: #2c3e50;
+}
+
+.quantity-controls {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
 }
 
 /*++++++++++++++++++++++++++++++++++++++*/
-/*+  FONDO CON IMAGEN                 +*/
+/*+  TEXTOS Y ETIQUETAS ESPECIALES    +*/
 /*++++++++++++++++++++++++++++++++++++++*/
-.background-with-image {
-    -fx-background-image: url('/Image/restaurante.png');
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: bottom center;
+.occupied-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.error-text {
+    -fx-fill: #e74c3c;
+    -fx-font-weight: bold;
+}
+
+.success-text {
+    -fx-fill: #2ecc71;
+    -fx-font-weight: bold;
+}
+
+.warning-text {
+    -fx-fill: #f39c12;
+    -fx-font-weight: bold;
+}
+
+/*++++++++++++++++++++++++++++++++++++++*/
+/*+  FORMULARIOS Y CONTROLES          +*/
+/*++++++++++++++++++++++++++++++++++++++*/
+.text-field, .password-field, .combo-box, .date-picker, .spinner {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(three-pass-box, rgba(52,152,219,0.3), 5, 0, 0, 2);
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+/*++++++++++++++++++++++++++++++++++++++*/
+/*+  TABLAS Y LISTADOS                +*/
+/*++++++++++++++++++++++++++++++++++++++*/
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:odd {
     -fx-background-color: #f9f9f9;
 }
 
-/*++++++++++++++++++++++++++++++++++++++*/
-/*+  IMÁGENES                         +*/
-/*++++++++++++++++++++++++++++++++++++++*/
-.image-view {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 3, 0, 0, 1);
+.table-row-cell:selected {
+    -fx-background-color: #d6eaf8;
 }
 
 /*++++++++++++++++++++++++++++++++++++++*/
-/*+  FORMULARIO DE LOGIN              +*/
+/*+  ALERTAS Y MENSAJES               +*/
 /*++++++++++++++++++++++++++++++++++++++*/
-.login-title {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-fill: #2c3e50;
-    -fx-padding: 0 0 20px 0;
+.alert {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
 }
 
-.login-label {
+.alert .header-panel {
+    -fx-background-color: #3498db;
+}
+
+.alert .content.label {
     -fx-font-size: 14px;
     -fx-text-fill: #2c3e50;
-}
-
-.login-field {
-    -fx-font-size: 14px;
-    -fx-pref-width: 200px;
-    -fx-padding: 5px;
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
-    -fx-border-color: #bdc3c7;
-}
-
-.error-message {
-    -fx-text-fill: #e74c3c;
-    -fx-font-size: 12px;
-}
-
-/*++++++++++++++++++++++++++++++++++++++*/
-/*+  SCROLL PANE Y BARRAS DE DESPLAZ. +*/
-/*++++++++++++++++++++++++++++++++++++++*/
-.scroll-pane {
-    -fx-background: transparent;
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-.scroll-pane .viewport {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:vertical {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:vertical .track {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-}
-
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #bdc3c7;
-    -fx-background-radius: 5px;
-}
-
-.scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #95a5a6;
-}
-
-.scroll-bar:vertical .increment-button,
-.scroll-bar:vertical .decrement-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
-}
-
-.scroll-bar:vertical .increment-arrow,
-.scroll-bar:vertical .decrement-arrow {
-    -fx-shape: " ";
-    -fx-padding: 0;
-}
-
-/*++++++++++++++++++++++++++++++++++++++*/
-/*+  FORMULARIO DE RESERVACIÓN        +*/
-/*++++++++++++++++++++++++++++++++++++++*/
-.text-field, .combo-box, .date-picker, .spinner {
-    -fx-pref-width: 200px;
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
-    -fx-border-color: #bdc3c7;
-}
-
-.radio-button-mesa {
-    -fx-font-size: 14px;
-    -fx-padding: 8px 15px;
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
-    -fx-border-color: #bdc3c7;
-}
-
-.radio-button-mesa:selected {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-border-color: #2980b9;
 }
