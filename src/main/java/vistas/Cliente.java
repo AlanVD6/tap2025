@@ -63,12 +63,63 @@ public class Cliente extends Stage {
                 alerta.setContentText("Por favor, llena todos los campos antes de guardar.");
                 alerta.showAndWait();
                 return;
+
             }
 
-            objC.setNomCte(txtNomCte.getText());
+            if (!txtNomCte.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+
+                Alert alerta = new Alert(AlertType.WARNING);
+                alerta.setTitle("Error");
+                alerta.setHeaderText(null);
+                alerta.setContentText("El nombre solo debe contener letras y espacios.");
+                alerta.showAndWait();
+                return;
+
+            } else {
+
+                objC.setNomCte(txtNomCte.getText());
+            }
+
             objC.setDireccion(txtDireccion.getText());
-            objC.setTelCte(txtTelCte.getText());
-            objC.setEmailCte(txtEmail.getText());
+
+            if (!txtTelCte.getText().matches("\\d+")) {
+                // Mostrar un mensaje de error o manejar la entrada inválida
+                Alert alerta = new Alert(AlertType.WARNING);
+                alerta.setTitle("Error");
+                alerta.setHeaderText(null);
+                alerta.setContentText("Por favor ingrese un número de teléfono válido.");
+                alerta.showAndWait();
+                return;
+
+            } else if (txtTelCte.getText().length() < 10) {
+
+                Alert alerta = new Alert(AlertType.WARNING);
+                alerta.setTitle("Error");
+                alerta.setHeaderText(null);
+                alerta.setContentText("Por favor ingrese un número de teléfono válido.");
+                alerta.showAndWait();
+                return;
+
+            }  else {
+
+                objC.setTelCte(txtTelCte.getText());
+            }
+
+            if (!txtEmail.getText().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+
+                Alert alerta = new Alert(AlertType.WARNING);
+                alerta.setTitle("Error");
+                alerta.setHeaderText(null);
+                alerta.setContentText("Por favor ingrese un correo electrónico válido.");
+                alerta.showAndWait();
+                return;
+
+            } else {
+
+                objC.setEmailCte(txtEmail.getText());
+            }
+
+
             if (objC.getIdCte() > 0)
                 objC.UPDATE();
             else
