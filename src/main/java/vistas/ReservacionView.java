@@ -175,9 +175,10 @@ public class ReservacionView {
             return;
         }
 
+        // Extraer el número de mesa correctamente
         String mesaSeleccionadaStr = cbMesa.getValue();
-        // Extraer solo el número de mesa del texto (ej: "Mesa 1 (Capacidad: 4)" -> "1")
-        int numeroMesa = Integer.parseInt(mesaSeleccionadaStr.replaceAll("[^0-9]", "").split(" ")[0]);
+        String numeroTexto = mesaSeleccionadaStr.split(" ")[1];
+        int numeroMesa = Integer.parseInt(numeroTexto);
 
         // Buscar la mesa correspondiente en la lista de mesas registradas
         MesaDAO mesaSeleccionada = null;

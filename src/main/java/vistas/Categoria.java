@@ -10,21 +10,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Categoria extends Stage {  // Heredar de Stage para usar métodos como setTitle y show
+public class Categoria extends Stage {
 
     private Button btnGuardar;
     private TextField txtCategoria;
     private VBox vBox;
-    private CategoriaDAO objC;  // Cambiado de Categoria a CategoriaDAO
+    private CategoriaDAO objC;
     private Scene escena;
     private TableView<CategoriaDAO> tbvClientes;
 
-    public Categoria(TableView<CategoriaDAO> tbvCat, CategoriaDAO obj) {  // Corregido el nombre del constructor
+    public Categoria(TableView<CategoriaDAO> tbvCat, CategoriaDAO obj) {
         this.tbvClientes = tbvCat;
         CrearUI();
 
         if (obj == null) {
-            this.objC = new CategoriaDAO();  // Asignar el nuevo objeto a objC
+            this.objC = new CategoriaDAO();
         } else {
             objC = obj;
             txtCategoria.setText(objC.getCategoria());

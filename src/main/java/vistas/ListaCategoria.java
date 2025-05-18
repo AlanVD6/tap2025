@@ -31,6 +31,8 @@ public class ListaCategoria extends Stage {
         btnAgregar = new Button();
         btnAgregar.setOnAction(event -> new Categoria(tbvCategoria, null));
         ImageView imv = new ImageView(getClass().getResource("/Image/next.png").toString());
+        imv.setFitWidth(20);
+        imv.setFitHeight(20);
         btnAgregar.setGraphic(imv);
         tlbMenu = new ToolBar(btnAgregar);
 
