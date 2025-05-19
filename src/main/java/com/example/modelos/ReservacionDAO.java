@@ -15,11 +15,12 @@ public class ReservacionDAO {
     private String hora;
     private int personas;
     private String telefono;
+    private int numeroMesa;
 
     public int getIdReserva() { return idReserva; }
-    public void setIdReserva (int idReserva) { this.idReserva = idReserva; }
+    public void setIdReserva(int idReserva) { this.idReserva = idReserva; }
 
-    public int getidCte() { return idCte; }
+    public int getIdCte() { return idCte; }
     public void setIdCte(int idCte) { this.idCte = idCte; }
 
     public String getNomCte() { return nomCte; }
@@ -37,85 +38,77 @@ public class ReservacionDAO {
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
+    public int getNumeroMesa() { return numeroMesa; }
+    public void setNumeroMesa(int numeroMesa) { this.numeroMesa = numeroMesa; }
+
     public void INSERT() {
-
-        String query = "INSERT INTO reservacion (idCte, nomCte, fecha, hora, personas, telefono) VALUES (" +
-                idCte + ", '" + nomCte + "', '" + fecha + "', '" + hora + "', '" + personas + "', '" + telefono + "')";
-
-        try{
-
+        String query = "INSERT INTO reservacion (idCte, nomCte, fecha, hora, personas, telefono, numeroMesa) VALUES (" +
+                idCte + ", '" + nomCte + "', '" + fecha + "', '" + hora + "', " + personas + ", '" + telefono + "', " + numeroMesa + ")";
+        try {
             Statement stmt = Conexion.connection.createStatement();
-            stmt.executeUpdate(query);
-
-        }catch(Exception e){
-
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                this.idReserva = rs.getInt(1);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     public void UPDATE() {
-
-        String query = "UPDATE reservacion SET nomCte = '" + nomCte + "', fecha = '" + fecha + "', hora = '" +
-                hora + "', personas = '" + personas + "', telefono = '" + telefono + "' WHERE idReserva = " + idReserva;
-
-        try{
-
+        String query = "UPDATE reservacion SET idCte = " + idCte + ", nomCte = '" + nomCte + "', fecha = '" + fecha +
+                "', hora = '" + hora + "', personas = " + personas + ", telefono = '" + telefono +
+                "', numeroMesa = " + numeroMesa + " WHERE idReserva = " + idReserva;
+        try {
             Statement stmt = Conexion.connection.createStatement();
             stmt.executeUpdate(query);
-
-        }catch(Exception e){
-
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void DELETE() {
+        try {
+            // Cambiar estado de la mesa a disponible antes de eliminar
+            MesaDAO mesaDAO = new MesaDAO();
+            for (MesaDAO m : mesaDAO.SELECT()) {
+                if (m.getNumero() == numeroMesa) {
+                    m.setEstado("disponible");
+                    m.UPDATE();
+                    break;
+                }
+            }
 
-        String query = "DELETE FROM reservacion WHERE idReserva = " + idReserva;
-
-        try{
-
+            String query = "DELETE FROM reservacion WHERE idReserva = " + idReserva;
             Statement stmt = Conexion.connection.createStatement();
             stmt.executeUpdate(query);
-
-        }catch(Exception e){
-
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public ObservableList<ReservacionDAO> SELECT() {
-
+        ObservableList<ReservacionDAO> lista = FXCollections.observableArrayList();
         String query = "SELECT * FROM reservacion";
-
-        ObservableList<ReservacionDAO> listaC = FXCollections.observableArrayList();
-        ReservacionDAO objC;
-
-        try{
-
+        try {
             Statement stmt = Conexion.connection.createStatement();
-            ResultSet res = stmt.executeQuery(query);
-
-            while (res.next()){
-
-                objC = new ReservacionDAO();
-
-                objC.setIdReserva(res.getInt("idReserva"));
-                objC.setIdCte(res.getInt("idCte"));
-                objC.setNomCte(res.getString("nomCte"));
-                objC.setFecha(res.getString("fecha"));
-                objC.setHora(res.getString("hora"));
-                objC.setPersonas(res.getInt("personas"));
-                objC.setTelefono((res.getString("telefono")));
-
-                listaC.add(objC);
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                ReservacionDAO r = new ReservacionDAO();
+                r.setIdReserva(rs.getInt("idReserva"));
+                r.setIdCte(rs.getInt("idCte"));
+                r.setNomCte(rs.getString("nomCte"));
+                r.setFecha(rs.getString("fecha"));
+                r.setHora(rs.getString("hora"));
+                r.setPersonas(rs.getInt("personas"));
+                r.setTelefono(rs.getString("telefono"));
+                r.setNumeroMesa(rs.getInt("numeroMesa"));
+                lista.add(r);
             }
-
-        }catch(Exception e){
-
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return listaC;
+        return lista;
     }
 }
+

@@ -83,7 +83,6 @@ public class Cliente extends Stage {
             objC.setDireccion(txtDireccion.getText());
 
             if (!txtTelCte.getText().matches("\\d+")) {
-                // Mostrar un mensaje de error o manejar la entrada inválida
                 Alert alerta = new Alert(AlertType.WARNING);
                 alerta.setTitle("Error");
                 alerta.setHeaderText(null);

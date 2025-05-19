@@ -32,7 +32,6 @@ public class ReservacionView {
     }
 
     private void mostrarFormularioReservacion() {
-
         ScrollPane scrollPrincipal = new ScrollPane();
         scrollPrincipal.setFitToWidth(true);
         scrollPrincipal.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
@@ -42,12 +41,10 @@ public class ReservacionView {
         formulario.setAlignment(Pos.TOP_CENTER);
         formulario.getStyleClass().add("detail-container");
 
-        // Título principal
         Text titulo = new Text("Reservación");
         titulo.getStyleClass().add("item-name");
         titulo.setStyle("-fx-font-size: 24px; -fx-fill: #2c3e50;");
 
-        // Sección de Datos del Cliente
         Text seccionCliente = new Text("Datos del Cliente");
         seccionCliente.setStyle("-fx-font-size: 18px; -fx-fill: #3498db; -fx-font-weight: bold;");
 
@@ -57,7 +54,6 @@ public class ReservacionView {
         gridCliente.setPadding(new Insets(10));
         gridCliente.setAlignment(Pos.CENTER);
 
-        // Campos del cliente con labels descriptivos
         tfNombre = new TextField();
         tfNombre.setPromptText("Ej: Juan Pérez");
         tfTelefono = new TextField();
@@ -67,7 +63,6 @@ public class ReservacionView {
         tfEmail = new TextField();
         tfEmail.setPromptText("Ej: cliente@ejemplo.com");
 
-        // Añadiendo labels descriptivos
         gridCliente.add(new Label("Nombre completo:"), 0, 0);
         gridCliente.add(tfNombre, 1, 0);
         gridCliente.add(new Label("Teléfono:"), 0, 1);
@@ -77,7 +72,6 @@ public class ReservacionView {
         gridCliente.add(new Label("Email (opcional):"), 0, 3);
         gridCliente.add(tfEmail, 1, 3);
 
-        // Sección de Detalles de Reservación
         Text seccionReserva = new Text("Detalles de la Reservación");
         seccionReserva.setStyle("-fx-font-size: 18px; -fx-fill: #3498db; -fx-font-weight: bold;");
 
@@ -88,7 +82,7 @@ public class ReservacionView {
         gridReserva.setAlignment(Pos.CENTER);
 
         dpFecha = new DatePicker();
-        dpFecha.setValue(LocalDate.now().plusDays(1)); // Mañana por defecto
+        dpFecha.setValue(LocalDate.now().plusDays(1));
 
         cbHora = new ComboBox<>();
         cbHora.getItems().addAll(
@@ -96,12 +90,11 @@ public class ReservacionView {
                 "15:00", "16:00", "17:00", "18:00", "19:00",
                 "20:00", "21:00", "22:00"
         );
-        cbHora.setValue("19:00"); // Hora por defecto
+        cbHora.setValue("19:00");
 
         spPersonas = new Spinner<>(1, 20, 2);
         spPersonas.setEditable(true);
 
-        // Añadiendo labels descriptivos
         gridReserva.add(new Label("Fecha de reservación:"), 0, 0);
         gridReserva.add(dpFecha, 1, 0);
         gridReserva.add(new Label("Hora de reservación:"), 0, 1);
@@ -109,7 +102,6 @@ public class ReservacionView {
         gridReserva.add(new Label("Número de personas:"), 0, 2);
         gridReserva.add(spPersonas, 1, 2);
 
-        // Sección de Selección de Mesa
         Text seccionMesa = new Text("Selección de Mesa");
         seccionMesa.setStyle("-fx-font-size: 18px; -fx-fill: #3498db; -fx-font-weight: bold;");
 
@@ -125,14 +117,12 @@ public class ReservacionView {
         }
         cbMesa.setPromptText("Seleccione una mesa disponible");
 
-        // Añadiendo label descriptivo
         contenedorMesa.getChildren().addAll(
                 new Label("Seleccione una mesa disponible:"),
                 cbMesa,
                 new Label("Nota: Solo se muestran mesas con disponibilidad")
         );
 
-        // Botones
         HBox botones = new HBox(20);
         botones.setAlignment(Pos.CENTER);
         botones.setPadding(new Insets(20, 0, 0, 0));
@@ -149,7 +139,6 @@ public class ReservacionView {
 
         botones.getChildren().addAll(btnGuardar, btnCancelar);
 
-        // Agregar todo al formulario
         formulario.getChildren().addAll(
                 titulo,
                 new Separator(),
@@ -169,18 +158,15 @@ public class ReservacionView {
     }
 
     private void guardarReservacion() {
-        if (tfNombre.getText().isEmpty() || tfTelefono.getText().isEmpty() ||
-                cbMesa.getValue() == null) {
+        if (tfNombre.getText().isEmpty() || tfTelefono.getText().isEmpty() || cbMesa.getValue() == null) {
             mostrarAlerta("Error", "Los campos marcados con * son obligatorios");
             return;
         }
 
-        // Extraer el número de mesa correctamente
         String mesaSeleccionadaStr = cbMesa.getValue();
         String numeroTexto = mesaSeleccionadaStr.split(" ")[1];
         int numeroMesa = Integer.parseInt(numeroTexto);
 
-        // Buscar la mesa correspondiente en la lista de mesas registradas
         MesaDAO mesaSeleccionada = null;
         for (MesaDAO mesa : mesasRegistradas) {
             if (mesa.getNumero() == numeroMesa) {
@@ -194,7 +180,6 @@ public class ReservacionView {
             return;
         }
 
-        // Validar que el número de personas no exceda la capacidad
         if (spPersonas.getValue() > mesaSeleccionada.getCapacidad()) {
             mostrarAlerta("Error", "El número de personas excede la capacidad de la mesa seleccionada");
             return;
@@ -214,9 +199,11 @@ public class ReservacionView {
         reservacion.setHora(cbHora.getValue());
         reservacion.setPersonas(spPersonas.getValue());
         reservacion.setTelefono(tfTelefono.getText());
+        reservacion.setNumeroMesa(numeroMesa); // <--- AQUÍ se guarda el número de mesa
+
         reservacion.INSERT();
 
-        // Actualizar el estado de la mesa a "reservada"
+        // Actualizar estado de la mesa
         mesaSeleccionada.setEstado("reservada");
         mesaSeleccionada.UPDATE();
 
