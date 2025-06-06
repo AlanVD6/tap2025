@@ -1,4 +1,28 @@
 /*++++++++++++++++++++++++++++++++++++++*/
+/*+BOTON DE BIENVENIDA                 +*/
+/*++++++++++++++++++++++++++++++++++++++*/
+
+.welcome-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 25px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 1);
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+.welcome-button:hover {
+    -fx-background-color: #2ecc71;
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.8), 10, 0, 0, 2);
+}
+
+.welcome-button:pressed {
+    -fx-background-color: #219653;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+/*++++++++++++++++++++++++++++++++++++++*/
 /*+  ESTILOS GENERALES DE LA APLICACIÓN +*/
 /*++++++++++++++++++++++++++++++++++++++*/
 .root {

@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -47,70 +48,58 @@ public class AdminView extends Stage {
 
         // Botones existentes
         Button btnEmpleados = crearBotonAdmin("Empleados", "/Image/empleados.png");
-        btnEmpleados.setOnAction(e -> {
-            ListaEmpleado listaempleado = new ListaEmpleado();
-            listaempleado.show();
-        });
+        btnEmpleados.setOnAction(e -> new ListaEmpleado().show());
         grid.add(btnEmpleados, 0, 0);
 
         Button btnCategoria = crearBotonAdmin("Categoría", "/Image/categoria.png");
-        btnCategoria.setOnAction(e -> {
-            ListaCategoria listacategoria = new ListaCategoria();
-            listacategoria.show();
-        });
+        btnCategoria.setOnAction(e -> new ListaCategoria().show());
         grid.add(btnCategoria, 1, 0);
 
         Button btnVentas = crearBotonAdmin("Ventas", "/Image/ventas.png");
         btnVentas.setOnAction(e -> {
-            // Lógica de ventas
-            System.out.println("Abriendo reporte de ventas");
+            Stage ventanaVentas = new Stage();
+            StackPane blanco = new StackPane();
+            blanco.setStyle("-fx-background-color: white;");
+            Scene escenaBlanca = new Scene(blanco, 800, 600);
+            ventanaVentas.setScene(escenaBlanca);
+            ventanaVentas.setTitle("Ventas");
+            ventanaVentas.show();
         });
         grid.add(btnVentas, 2, 0);
 
         Button btnProveedor = crearBotonAdmin("Proveedor", "/Image/proveedor.png");
-        btnProveedor.setOnAction(e -> {
-            ListaProveedor listaproveedor = new ListaProveedor();
-            listaproveedor.show();
-        });
+        btnProveedor.setOnAction(e -> new ListaProveedor().show());
         grid.add(btnProveedor, 0, 1);
 
         Button btnInsumos = crearBotonAdmin("Insumos", "/Image/insumos.png");
-        btnInsumos.setOnAction(e -> {
-            ListaInsumos listainsumos = new ListaInsumos();
-            listainsumos.show();
-        });
+        btnInsumos.setOnAction(e -> new ListaInsumos().show());
         grid.add(btnInsumos, 1, 1);
 
         Button btnProducto = crearBotonAdmin("Producto", "/Image/producto.png");
-        btnProducto.setOnAction(e -> {
-            ListaProducto listaProducto = new ListaProducto();
-            listaProducto.show();
-        });
+        btnProducto.setOnAction(e -> new ListaProducto().show());
         grid.add(btnProducto, 2, 1);
 
-
         Button btnClientes = crearBotonAdmin("Clientes", "/Image/clientes.png");
-        btnClientes.setOnAction(e -> {
-            ListaClientes listaClientes = new ListaClientes();
-            listaClientes.show();
-        });
+        btnClientes.setOnAction(e -> new ListaClientes().show());
         grid.add(btnClientes, 0, 2);
 
         Button btnMesas = crearBotonAdmin("Mesas", "/Image/mesa.png");
-        btnMesas.setOnAction(e -> {
-            ListaMesas listamesas = new ListaMesas();
-            listamesas.show();
-        });
+        btnMesas.setOnAction(e -> new ListaMesas().show());
         grid.add(btnMesas, 1, 2);
 
         Button btnReservaciones = crearBotonAdmin("Reservaciones", "/Image/reservar.png");
-        btnReservaciones.setOnAction(e -> {
-            ListaReservacion listaReservacion = new ListaReservacion();
-            listaReservacion.show();
-        });
+        btnReservaciones.setOnAction(e -> new ListaReservacion().show());
         grid.add(btnReservaciones, 2, 2);
 
-        root.setCenter(grid);
+        Button btnOrdenes = crearBotonAdmin("Órdenes", "/Image/orden.png");
+        btnOrdenes.setOnAction(e -> new ListaOrden().show());
+        grid.add(btnOrdenes, 0, 3);
+
+        // ScrollPane para el grid
+        ScrollPane scrollPane = new ScrollPane(grid);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: transparent;");
+        root.setCenter(scrollPane);
 
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/styles/estilo.css").toExternalForm());
