@@ -3,6 +3,7 @@ package com.example.modelos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -102,4 +103,55 @@ public class MesaDAO {
             e.printStackTrace();
         }
     }
+
+    public void UPDATEestadoD(String estado, int numero) {
+        String query = "UPDATE mesas SET estado = ? WHERE numero = ?";
+
+        try {
+            PreparedStatement pstmt = Conexion.connection.prepareStatement(query);
+            pstmt.setString(1, estado);
+            pstmt.setInt(2, numero);
+            pstmt.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getIdMesaPorNumero(int numero) {
+        String query = "SELECT idMesa FROM mesas WHERE numero = " + numero;
+        int id = -1;
+
+        try {
+            Statement stmt = Conexion.connection.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            if (res.next()) {
+                id = res.getInt(1);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
+    public int getNumeroMesaPorOrden(int idOrden) {
+        String query = "SELECT idMesa FROM orden WHERE idOrd = ?";
+        int numero = -1;
+
+        try {
+            PreparedStatement pstmt = Conexion.connection.prepareStatement(query);
+            pstmt.setInt(1, idOrden);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                numero = rs.getInt("idMesa");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return numero;
+    }
+
 }

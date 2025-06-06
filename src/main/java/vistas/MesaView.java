@@ -1,7 +1,6 @@
 package vistas;
 
-import com.example.modelos.Mesa;
-import com.example.modelos.MesaDAO;
+import com.example.modelos.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,12 +11,18 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MesaView {
     private List<Mesa> mesas;
     private BorderPane root;
+
+    private int IdOrden;
+
+    private MesaDAO mesaDAO = new MesaDAO();
 
     public MesaView(BorderPane root) {
         this.root = root;
@@ -190,12 +195,33 @@ public class MesaView {
         return capacidad;
     }
 
+    private int RandID() {
+        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+        List<Integer> ids = empleadoDAO.obtenerIdsEmpleados();
+
+        if (ids == null || ids.isEmpty()) {
+            throw new IllegalStateException("No hay empleados disponibles.");
+        }
+
+        int randomIndex = (int)(Math.random() * ids.size());
+        int idSeleccionado = ids.get(randomIndex);
+        System.out.println("ID empleado aleatorio: " + idSeleccionado);
+        return idSeleccionado;
+    }
+
+
+
     private Button createSelectButton(Mesa mesa) {
         Button btnSeleccionar = new Button("Seleccionar Mesa");
+         OrdenDAO orden = new OrdenDAO();
         btnSeleccionar.getStyleClass().add("order-button");
         btnSeleccionar.setOnAction(e -> {
             updateMesaStatus(mesa, "ocupada");
             refreshView();
+           int IdTab = mesaDAO.getIdMesaPorNumero(mesa.getNumero());
+           int IdEmp = RandID();
+            orden.INSERTC(IdEmp,IdTab);
+            PlatillosView.IdOrden = orden.UltimoInsert();
         });
         return btnSeleccionar;
     }

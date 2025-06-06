@@ -101,4 +101,19 @@ public class DetalleOrdenDAO {
 
         return listaC;
     }
+
+    public void INSERT(int IdOrden, int IdProducto, int Cantidad) {
+
+        String query = "INSERT INTO detOrden (idOrden, idProd, cantidad) VALUES ('" + IdOrden + "', '" + IdProducto + "', '" + Cantidad + "')";
+
+        try{
+
+            Statement stmt = Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+        }
+    }
 }
