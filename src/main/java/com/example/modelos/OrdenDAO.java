@@ -2,7 +2,9 @@ package com.example.modelos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -44,6 +46,21 @@ public class OrdenDAO {
 
         }catch(Exception e){
 
+            e.printStackTrace();
+        }
+    }
+
+    public void INSERTC(int idEmpleado, int idTable) {
+        LocalDate fecha = LocalDate.now();     // yyyy-MM-dd
+        LocalTime hora = LocalTime.now();      // HH:mm:ss (puedes formatear si quieres menos precisión)
+
+        String query = "INSERT INTO orden (fecha, hora, idEmp, idMesa) VALUES ('" +
+                fecha + "', '" + hora + "', '" + idEmpleado + "', '" + idTable + "')";
+
+        try {
+            Statement stmt = Conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
@@ -110,5 +127,23 @@ public class OrdenDAO {
         }
 
         return listaC;
+    }
+
+    public int UltimoInsert(){
+        int id=0;
+        String query="SELECT LAST_INSERT_ID()";
+        try{
+
+            Statement stmt = Conexion.connection.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            if(res.next()) {
+                id = res.getInt(1);
+            }
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+        }
+        return id;
     }
 }

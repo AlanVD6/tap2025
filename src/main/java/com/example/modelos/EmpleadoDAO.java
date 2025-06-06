@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmpleadoDAO {
 
@@ -124,4 +126,23 @@ public class EmpleadoDAO {
 
         return listaC;
     }
+
+    public List<Integer> obtenerIdsEmpleados() {
+        List<Integer> ids = new ArrayList<>();
+        String query = "SELECT idEmp FROM empleado";
+
+        try {
+            Statement stmt = Conexion.connection.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                ids.add(res.getInt(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ids;
+    }
+
+
 }

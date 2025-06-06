@@ -1,6 +1,9 @@
 package vistas;
 
+import com.example.modelos.DetalleOrdenDAO;
+import com.example.modelos.OrdenDAO;
 import com.example.modelos.Platillo;
+import com.example.modelos.ProductoDAO;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,6 +17,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class PlatillosView {
+
+    public static int IdOrden;
 
     public PlatillosView(BorderPane root) {
         // Configurar el fondo con imagen
@@ -146,6 +151,9 @@ public class PlatillosView {
         btnOrdenar.getStyleClass().add("order-button");
         btnOrdenar.setOnAction(e -> {
             System.out.println("Platillo ordenado: " + p.getNombre() + " x" + cantidadActual[0]);
+            int IdPlatillo = new ProductoDAO().IdProduct(p.getNombre());
+            new DetalleOrdenDAO().INSERT(IdOrden,IdPlatillo,cantidadActual[0]);
+
         });
 
         Button btnRegresar = new Button("Regresar");

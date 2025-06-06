@@ -104,4 +104,24 @@ public class ProductoDAO {
 
         return listaC;
     }
+
+    public int IdProduct(String NombreProd) {
+        String query = "SELECT idProd FROM producto WHERE producto = '" + NombreProd + "'";
+        int Id = 0;
+
+        try {
+            Statement stmt = Conexion.connection.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+
+            if (res.next()) {
+                Id = res.getInt(1); // ahora sí es seguro
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Id;
+    }
+
 }

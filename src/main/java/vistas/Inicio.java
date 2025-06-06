@@ -1,5 +1,6 @@
 package vistas;
 
+import com.example.modelos.MesaDAO;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,7 +34,15 @@ public class Inicio {
         btnMesa.setOnAction(e -> new MesaView(root));
         btnReserva.setOnAction(e -> new ReservacionView(root));
         btnAdmin.setOnAction(e -> new LoginView());
-        btnTicket.setOnAction(e -> new TicketView());
+        btnTicket.setOnAction(e -> {
+            new TicketView(PlatillosView.IdOrden);
+
+            // Buscar el número de mesa de la orden actual (PlatillosView.IdOrden)
+            int numeroMesa = new MesaDAO().getNumeroMesaPorOrden(PlatillosView.IdOrden);
+
+            // Cambiar estado de la mesa
+            new MesaDAO().UPDATEestadoD("desocupado", numeroMesa);
+        });
 
 
         topBar.getChildren().addAll(btnPlatillos, btnBebidas, btnMesa,btnReserva, btnTicket, btnAdmin);

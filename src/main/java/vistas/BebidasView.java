@@ -1,6 +1,8 @@
 package vistas;
 
 import com.example.modelos.Bebida;
+import com.example.modelos.DetalleOrdenDAO;
+import com.example.modelos.ProductoDAO;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -156,6 +158,8 @@ public class BebidasView {
         btnOrdenar.getStyleClass().add("order-button");
         btnOrdenar.setOnAction(e -> {
             System.out.println("Bebida ordenada: " + b.getNombre() + " x" + cantidadActual[0]);
+            int IdPlatillo = new ProductoDAO().IdProduct(b.getNombre());
+            new DetalleOrdenDAO().INSERT(PlatillosView.IdOrden,IdPlatillo,cantidadActual[0]);
         });
 
         Button btnRegresar = new Button("Regresar");
