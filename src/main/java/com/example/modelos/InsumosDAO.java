@@ -2,6 +2,7 @@ package com.example.modelos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -66,6 +67,11 @@ public class InsumosDAO {
 
         }catch(Exception e){
 
+            Alert warning = new Alert(Alert.AlertType.ERROR);
+            warning.setTitle("Aviso!");
+            warning.setHeaderText("No se puede eliminar un registro.");
+            warning.setContentText("No puedes eliminar un insumo, pues esta relacionado con el menu directamente,\nademas de estar relacionado con tus productos");
+            warning.showAndWait();
             e.printStackTrace();
         }
     }

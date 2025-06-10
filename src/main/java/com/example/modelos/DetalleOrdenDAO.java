@@ -2,7 +2,9 @@ package com.example.modelos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -66,6 +68,11 @@ public class DetalleOrdenDAO {
 
         }catch(Exception e){
 
+            Alert warning = new Alert(Alert.AlertType.ERROR);
+            warning.setTitle("Aviso!");
+            warning.setHeaderText("No se puede eliminar un registro.");
+            warning.setContentText("No puedes eliminar un producto, pues esta relacionado con el menu directamente,\nademas de estar relacionado con tu inventario");
+            warning.showAndWait();
             e.printStackTrace();
         }
     }
@@ -103,17 +110,17 @@ public class DetalleOrdenDAO {
     }
 
     public void INSERT(int IdOrden, int IdProducto, int Cantidad) {
+        String query = "INSERT INTO detOrden (idOrden, idProd, cantidad) VALUES (?, ?, ?)";
 
-        String query = "INSERT INTO detOrden (idOrden, idProd, cantidad) VALUES ('" + IdOrden + "', '" + IdProducto + "', '" + Cantidad + "')";
-
-        try{
-
-            Statement stmt = Conexion.connection.createStatement();
-            stmt.executeUpdate(query);
-
-        }catch(Exception e){
-
+        try {
+            PreparedStatement pstmt = Conexion.connection.prepareStatement(query);
+            pstmt.setInt(1, IdOrden);
+            pstmt.setInt(2, IdProducto);
+            pstmt.setInt(3, Cantidad);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

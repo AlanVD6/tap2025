@@ -2,6 +2,7 @@ package com.example.modelos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -63,6 +64,11 @@ public class CategoriaDAO {
 
         }catch(Exception e){
 
+            Alert warning = new Alert(Alert.AlertType.ERROR);
+            warning.setTitle("Aviso!");
+            warning.setHeaderText("No se puede eliminar un registro.");
+            warning.setContentText("No se puede eliminar una categoria hasta haber eliminado por completo\n los registros de productos,ordenes, etc.");
+            warning.showAndWait();
             e.printStackTrace();
         }
     }

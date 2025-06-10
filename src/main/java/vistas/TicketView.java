@@ -5,13 +5,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 
 public class TicketView {
 
     public TicketView(int idOrden) {
-        mostrarTicket(idOrden);
+        StringBuilder contenido = generarTicket(idOrden);
+        mostrarTicket(contenido.toString());
+        guardarTicketPDF(contenido.toString(), idOrden);
     }
 
     public StringBuilder generarTicket(int idOrden) {
@@ -70,10 +78,10 @@ public class TicketView {
         return ticket;
     }
 
-    private void mostrarTicket(int idOrden) {
+    private void mostrarTicket(String contenido) {
         Stage ticketStage = new Stage();
         TextArea area = new TextArea();
-        area.setText(generarTicket(idOrden).toString());
+        area.setText(contenido);
         area.setEditable(false);
         area.setStyle("-fx-font-size: 14px; -fx-padding: 20px;");
 
@@ -81,5 +89,56 @@ public class TicketView {
         ticketStage.setScene(scene);
         ticketStage.setTitle("Ticket de Compra");
         ticketStage.show();
+    }
+
+    private void guardarTicketPDF(String contenido, int idOrden) {
+        PDDocument document = new PDDocument();
+
+        try {
+            PDPage page = new PDPage();
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+            contentStream.setFont(PDType1Font.COURIER, 12);
+            contentStream.beginText();
+            contentStream.newLineAtOffset(50, 700);
+
+            float y = 700;
+            for (String line : contenido.split("\n")) {
+                if (y <= 50) {
+                    contentStream.endText();
+                    contentStream.close();
+
+                    page = new PDPage();
+                    document.addPage(page);
+                    contentStream = new PDPageContentStream(document, page);
+                    contentStream.setFont(PDType1Font.COURIER, 12);
+                    contentStream.beginText();
+                    y = 700;
+                    contentStream.newLineAtOffset(50, y);
+                }
+
+                contentStream.showText(line);
+                contentStream.newLineAtOffset(0, -15);
+                y -= 15;
+            }
+
+            contentStream.endText();
+            contentStream.close();
+
+            String fileName = "ticket_orden_" + idOrden + ".pdf";
+            File outputFile = new File(fileName);
+            document.save(outputFile);
+            System.out.println("PDF guardado en: " + outputFile.getAbsolutePath());
+
+        } catch (IOException e) {
+            System.err.println("Error al guardar el PDF: " + e.getMessage());
+        } finally {
+            try {
+                document.close();
+            } catch (IOException e) {
+                System.err.println("Error al cerrar el documento PDF.");
+            }
+        }
     }
 }
