@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 public class Inicio {
 
     public Inicio() {
+
         Stage stage = new Stage();
         BorderPane root = new BorderPane();
         HBox topBar = new HBox(20);
@@ -35,13 +36,13 @@ public class Inicio {
         btnReserva.setOnAction(e -> new ReservacionView(root));
         btnAdmin.setOnAction(e -> new LoginView());
         btnTicket.setOnAction(e -> {
+
             new TicketView(PlatillosView.IdOrden);
 
             // Buscar el número de mesa de la orden actual (PlatillosView.IdOrden)
             int numeroMesa = new MesaDAO().getNumeroMesaPorOrden(PlatillosView.IdOrden);
+            new MesaDAO().UPDATEestadoD();
 
-            // Cambiar estado de la mesa
-            new MesaDAO().UPDATEestadoD("desocupado", numeroMesa);
         });
 
 

@@ -104,13 +104,13 @@ public class MesaDAO {
         }
     }
 
-    public void UPDATEestadoD(String estado, int numero) {
-        String query = "UPDATE mesas SET estado = ? WHERE numero = ?";
+    public void UPDATEestadoD() {
+        String query = "UPDATE mesas SET estado = 'disponible'";
 
         try {
             PreparedStatement pstmt = Conexion.connection.prepareStatement(query);
-            pstmt.setString(1, estado);
-            pstmt.setInt(2, numero);
+          //pstmt.setString(1, estado);
+           // pstmt.setInt(2, numero);
             pstmt.executeUpdate();
         } catch(Exception e) {
             e.printStackTrace();

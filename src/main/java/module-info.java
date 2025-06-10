@@ -1,6 +1,8 @@
 module com.example.tab2025 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.apache.pdfbox;
+
 
 
     opens com.example.tab2025 to javafx.fxml;

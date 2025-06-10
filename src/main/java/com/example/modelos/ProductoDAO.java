@@ -2,6 +2,7 @@ package com.example.modelos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -68,6 +69,11 @@ public class ProductoDAO {
 
         }catch(Exception e){
 
+            Alert warning = new Alert(Alert.AlertType.ERROR);
+            warning.setTitle("Aviso!");
+            warning.setHeaderText("No se puede eliminar un registro.");
+            warning.setContentText("No puedes eliminar un producto, pues esta relacionado con el menu directamente,\nademas de estar relacionado con tu inventario");
+            warning.showAndWait();
             e.printStackTrace();
         }
     }
@@ -92,7 +98,7 @@ public class ProductoDAO {
                 objC.setProducto(res.getString("Producto"));
                 objC.setPrecio(res.getFloat("Precio"));
                 objC.setCosto(res.getFloat("Costo"));
-                objC.setIdProd(res.getInt("idCat"));
+                objC.setIdCat(res.getInt("idCat"));
 
                 listaC.add(objC);
             }
